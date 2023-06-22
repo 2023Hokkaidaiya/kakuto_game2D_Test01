@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Principal;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -32,6 +33,15 @@ public class PlayerController : MonoBehaviour
     //UŒ‚ƒIƒuƒWƒFƒNƒg
     private GameObject attackObject;
 
+    //ƒvƒŒƒCƒ„[‚©“G‚©@¶Fu‚Pv@‰EF‚Q@ACOM@¶F-1A‰EFu|2v
+    public int assign;
+
+    //UŒ‚‚ÌPrefab
+    public GameObject attackPrefab;
+
+    //---------------------------------------------------
+    //ƒXƒ^[ƒg
+    //---------------------------------------------------
     // Start is called before the first frame update
     void Start()
     {
@@ -42,14 +52,15 @@ public class PlayerController : MonoBehaviour
         this.myRigidbody = GetComponent<Rigidbody2D>();
 
         //qƒIƒuƒWƒFƒNƒg‚ğæ“¾
-        this.attackObject = transform.Find("Attack").gameObject;
+        //this.attackObject = transform.Find("Attack").gameObject;
 
-        //Õ“Ë‚ğƒIƒt
-        this.attackObject.SetActive(false);
+        //Õ“Ë”»’èdake‚ğƒfƒBƒXƒG[ƒuƒ‹
+        //this.attackObject.GetComponent<BoxCollider2D>().enabled = false;
     }
-
-    // Update is called once per frame
-    void Update()
+    //QQQQQQQQQQQQQQQQQQQQQQQQ
+    //ƒvƒŒƒCƒ„[
+    //QQQQQQQQQQQQQQQQQQQQQQQ
+    void Player()
     {
         //ˆÚ“®‚ª‰Â”\
         if (isRun)
@@ -117,15 +128,42 @@ public class PlayerController : MonoBehaviour
             myAnimator.SetTrigger("PreAttack");
         }
 
-        //Debug.Log("velocity: " + this.myRigidbody.velocity.y);
-        //Debug.Log("Ground: " + isGround); 
 
+    }
+
+    //----------------------------------------------------
+    //ƒvƒŒƒCƒ„[iCOM)
+    //----------------------------------------------------
+    void PlayerComuter()
+    {
+        if (isRun)
+        {
+            //“®‚¯‚È‚­‚·‚é
+            isRun = false;
+            myAnimator.SetTrigger("PreAttack");
+        }
+    }
+
+    // Update is called once per frame
+    //QQQQQQQQQQQQQQQQQQQQQQQQQ
+    //ƒAƒbƒvƒf[ƒg
+    //QQQQQQQQQQQQQQQQQQQQQQQQ
+    void Update()
+    {
+        if (assign == 1)
+        {
+            //ƒvƒŒƒCƒ„[
+            Player();
+        }
+        else if (assign == -2)
+        {
+            //ƒvƒŒƒCƒ„[iCOM)
+            PlayerComuter();
+        }
+
+        //ƒWƒƒƒ“ƒv‚Ì‘JˆÚ
         this.myAnimator.SetFloat("Jump", this.myRigidbody.velocity.y);
         this.myAnimator.SetBool("Ground", isGround);
-
-        //ƒRƒ‰ƒCƒ_[‚ÌOFF/ON‚ÌƒTƒ“ƒvƒ‹
-        //this.GetComponent<BoxCollider2D>().enabled = false;
-        //this.GetComponent<BoxCollider2D>().enabled = true;
     }
 
     public void PreAttackStart()
@@ -136,16 +174,22 @@ public class PlayerController : MonoBehaviour
     public void AttackStart()
     {
         //Õ“Ë‚ğƒIƒ“
-        this.attackObject.SetActive(true);
+        //this.attackObject.SetActive(true);
+        //this.attackObject.GetComponent<BoxCollider2D>().enabled = true;
+        //UŒ‚‚ğ¶¬
+        attackObject = Instantiate(attackPrefab, this.transform.position + new Vector3(1.29f *transform.localScale.x ,1.44f,0f), Quaternion.identity);
         Debug.Log("AttackStart");
     }
 
     public void AttackEnd()
     {
         //Õ“Ë‚ğƒIƒt
-        this.attackObject.SetActive(false);
+        //this.attackObject.SetActive(false);
+        //this.attackObject.GetComponent<BoxCollider2D>().enabled = false;
+        //UŒ‚‚ğ”jŠü‚·‚é
+        Destroy(attackObject.gameObject);
         isRun = true;
-        Debug.Log("AttackEnd");
+        Debug.Log("AttackEnd");      
     }
 
     /*
@@ -162,6 +206,31 @@ public class PlayerController : MonoBehaviour
     }
     */
 
+
+    //
+    
+    //
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Attack")
+        {
+            myAnimator.SetTrigger("Damage");
+            /*
+            if (assign == 1)
+            {
+                HPManager.HPLeft.GetComponent;
+
+                //ƒvƒŒƒCƒ„[‚ªƒ_ƒ[ƒW‚ğó‚¯‚½
+                
+            }
+            else if (assign == -2)
+            {
+                //ƒvƒŒƒCƒ„[iCOM)‚ªƒ_ƒ[ƒW‚ğó‚¯‚½
+
+            }
+            */
+        }
+    }
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Ground")
@@ -169,10 +238,7 @@ public class PlayerController : MonoBehaviour
             isGround = true;
         }
 
-        if (other.gameObject.tag == "Attack")
-        {
-            myAnimator.SetTrigger("Damage");
-        }
+
     }
 
     void OnCollisionStay2D(Collision2D other)
