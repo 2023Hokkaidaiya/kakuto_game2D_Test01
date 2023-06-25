@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class HPManager : MonoBehaviour
 {
     //左上のHPテキスト
-    public GameObject hpleftText;
+    private GameObject hpleftText;
     //右上のテキスト
-    public GameObject hprightText;
+    private GameObject hprightText;
     //HP player1 player2計算用変数
     public int HPLeft;  //1
     public int HPRight; //2
@@ -17,9 +17,7 @@ public class HPManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //HP player1 player2を0で初期化
-        HPLeft = 0;
-        HPRight = 0;
+
         //シーン中のHPTextオブジェクトを取得
         this.hpleftText = GameObject.Find("HP_player1");
         this.hprightText = GameObject.Find("HP_player2");

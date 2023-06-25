@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Principal;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -39,6 +40,17 @@ public class PlayerController : MonoBehaviour
     //攻撃のPrefab
     public GameObject attackPrefab;
 
+    //HPmaga
+    private GameObject hpManager;
+    //相手(インスペクターでクロスさせてください）
+    public GameObject otherPlayer;
+    //状態（ステートマシン）
+    private int stateNumber;
+    //汎用タイマー
+    private float timerCounter;
+    //debagテキスト
+    public GameObject stateText;
+
     //---------------------------------------------------
     //スタート
     //---------------------------------------------------
@@ -50,6 +62,9 @@ public class PlayerController : MonoBehaviour
 
         //Rigidbodyコンポーネントを取得
         this.myRigidbody = GetComponent<Rigidbody2D>();
+
+        //HPマネージャオブジェクト
+        hpManager = GameObject.Find("HPManager");
 
         //子オブジェクトを取得
         //this.attackObject = transform.Find("Attack").gameObject;
@@ -103,7 +118,7 @@ public class PlayerController : MonoBehaviour
                 myAnimator.SetInteger("Run", 0);
 
                 //停止
-                this.myRigidbody.velocity = new Vector2(0f, this.myRigidbody.velocity.y);
+                this.myRigidbody.velocity = new Vector2(0.0f, this.myRigidbody.velocity.y);
 
                 //ジャンプ
                 if (Input.GetKey(KeyCode.Space) && isGround)
@@ -116,7 +131,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             //停止
-            this.myRigidbody.velocity = new Vector2(0f, this.myRigidbody.velocity.y);
+            this.myRigidbody.velocity = new Vector2(0.0f, this.myRigidbody.velocity.y);
         }
 
         //攻撃
@@ -132,16 +147,176 @@ public class PlayerController : MonoBehaviour
     }
 
     //----------------------------------------------------
+    //便利な関数
+    //----------------------------------------------------
+
+    //距離を求める
+    float getLength(Vector2 current, Vector2 target)
+    {
+        return Mathf.Sqrt(((current.x - target.x) * (current.x - target.x)) + ((current.y - target.y) * (current.y - target.y)));
+    }
+    //方向を求める ※オイラー（-180～0～+180)
+    float getDirection(Vector2 current, Vector2 target)
+    {
+        Vector3 value = target - current;
+        return Mathf.Atan2(value.x, value.y) * Mathf.Rad2Deg; //ラジアン→オイラー
+    }
+
+    //----------------------------------------------------
     //プレイヤー（COM)
     //----------------------------------------------------
     void PlayerComuter()
     {
+        //相手の距離
+        float length = getLength(this.transform.position, otherPlayer.transform.position);
+        //Debug.Log("length" + length);
+        //デバッグ ""は文字だということ
+        stateText.GetComponent<Text>().text = "" + stateNumber;
         if (isRun)
         {
             //動けなくする
-            isRun = false;
-            myAnimator.SetTrigger("PreAttack");
+            //isRun = false;
+            //myAnimator.SetTrigger("PreAttack");
+
+            //状態
+            switch(stateNumber)
+            {
+                //待機（スタート）
+                case 0:
+                    {
+                        if(timerCounter > 3.0f)
+                        {
+                            //状態を遷移
+                            stateNumber = 1;
+                        }
+                    }break;
+                //少し近づく
+                case 1:
+                    {
+                        //プレイヤーが遠いか
+                        if (length > 5.0f)
+                        {
+                            myAnimator.SetInteger("Run", 1);
+                            this.myRigidbody.velocity = new Vector2(VELOCITY * transform.localScale.x, this.myRigidbody.velocity.y);
+                            
+                        }
+                        else
+                        {
+                            //停止
+                            myAnimator.SetInteger("Run", 0);
+                            this.myRigidbody.velocity = new Vector2(0f, this.myRigidbody.velocity.y);
+
+                            //リセット
+                            timerCounter = 0.0f;
+                            //状態を遷移
+                            stateNumber = 2;
+                        }
+                    }
+                    break;
+
+                    //待機(次の行動考える）
+                    case 2:
+                    {
+                        //タイマー
+                        if (timerCounter > 3.0f)
+                        {
+                            //向こうから近付いてきたか
+                            if (length < 3.0f)
+                            {
+                                //リセット
+                                timerCounter = 0.0f;
+                                //状態を遷移
+                                stateNumber = 4;
+                            }
+                            else
+                            {
+                                //リセット
+                                timerCounter = 0.0f;
+                                //状態を遷移
+                                stateNumber = 3;
+                            }
+                        }
+                    }
+                    break;
+                //攻撃可能距離に近づく
+                case 3:
+                    {
+                        if (length > 2.0f)
+                        {
+                            myAnimator.SetInteger("Run", 1);
+                            this.myRigidbody.velocity = new Vector2(VELOCITY * transform.localScale.x, this.myRigidbody.velocity.y);
+                            //リセット
+                            timerCounter = 0.0f;
+                            //状態を遷移
+                            stateNumber = 5;
+                        }
+                        else
+                        {
+                            //停止
+                            myAnimator.SetInteger("Run", 0);
+                            this.myRigidbody.velocity = new Vector2(0f, this.myRigidbody.velocity.y);
+                            //リセット
+                            timerCounter = 0.0f;
+                            //状態を遷移
+                            stateNumber = 4;
+                        }
+                    }
+                    break;
+
+                    //少し離れる
+                    case 4: 
+                    {
+                        //プレイヤーが近い
+                        if (length < 5.0f)
+                        {
+                            myAnimator.SetInteger("Run", -1);
+                            this.myRigidbody.velocity = new Vector2(-VELOCITY * transform.localScale.x, this.myRigidbody.velocity.y);
+                            //リセット
+                            timerCounter = 0.0f;
+                            //状態を遷移
+                            stateNumber = 6;
+                        }
+                        else
+                        {
+                            //停止
+                            myAnimator.SetInteger("Run", 0);
+                            this.myRigidbody.velocity = new Vector2(0f, this.myRigidbody.velocity.y);
+                            //リセット
+                            timerCounter = 0.0f;
+                            //状態を遷移
+                            stateNumber = 3;
+                        }
+                    }
+                    break;
+
+                    //Attack
+                    case 5:
+                    {
+                        myAnimator.SetTrigger("PreAttack");
+                        
+                        //リセット
+                        timerCounter = 0.0f;
+                        //状態を遷移
+                        stateNumber = 2;
+                    }
+                    break;
+                    //Guard
+                    case 6:
+                    {
+                        myAnimator.SetTrigger("Guard");
+                        //リセット
+                        timerCounter = 0.0f;
+                        //状態を遷移
+                        stateNumber = 3;
+
+                    }
+                    break;
+            }
+
+
         }
+        //タイマー
+        timerCounter += Time.deltaTime;
     }
 
     // Update is called once per frame
@@ -215,10 +390,10 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Attack")
         {
             myAnimator.SetTrigger("Damage");
-            /*
+            
             if (assign == 1)
             {
-                HPManager.HPLeft.GetComponent;
+                hpManager.GetComponent<HPManager>().HPLeft--;
 
                 //プレイヤーがダメージを受けた
                 
@@ -226,9 +401,9 @@ public class PlayerController : MonoBehaviour
             else if (assign == -2)
             {
                 //プレイヤー（COM)がダメージを受けた
-
+                hpManager.GetComponent<HPManager>().HPRight--;
             }
-            */
+            
         }
     }
     void OnCollisionEnter2D(Collision2D other)
