@@ -434,7 +434,7 @@ public class PlayerController : MonoBehaviour
 
             if (assign == 1)
             {
-                hpManager.GetComponent<HPManager>().HPLeft--;
+                hpManager.GetComponent<HPManager>().HPLeft-= TitleController.assign2Attack;
 
                 //プレイヤーがダメージを受けた
                 //吹っ飛ぶ
@@ -444,7 +444,7 @@ public class PlayerController : MonoBehaviour
             else if (assign == -2)
             {
                 //プレイヤー（COM)がダメージを受けた
-                hpManager.GetComponent<HPManager>().HPRight--;
+                hpManager.GetComponent<HPManager>().HPRight -= TitleController.assign1Attack;
                 //吹っ飛ぶ
                 myRigidbody.AddForce(new Vector3(-5000f * transform.localScale.x, 0f, 0f));
             }
