@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Principal;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour
 {
@@ -71,6 +72,18 @@ public class PlayerController : MonoBehaviour
 
         //衝突判定dakeをディスエーブル
         //this.attackObject.GetComponent<BoxCollider2D>().enabled = false;
+
+        //アサイン１→Leftstate　アサイン２→Rightstate
+        if (assign == 1)
+        {
+            //プレイヤー
+            this.stateText = GameObject.Find("Leftstate");
+        }
+        else if (assign == -2)
+        {
+            //プレイヤー（COM)
+            this.stateText = GameObject.Find("Rightstate");
+        }
 
         //デバッグ(ゲームスピードを遅くする
         Time.timeScale = 1.0f;
