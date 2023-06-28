@@ -30,4 +30,8 @@ public class PlayerGenerator : MonoBehaviour
     {
         
     }
+    //アサイン1の入れ替え
+    //アサイン1を戻す
+    //アサイン2の入れ替え
+    //アサイン2を戻す
 }

@@ -52,6 +52,11 @@ public class PlayerController : MonoBehaviour
     //debagテキスト
     public GameObject stateText;
 
+    //攻撃を受ける（相手から知らされる）
+    public bool isBeAttacked = false;
+    //ガードしている
+    private bool isGuard = false;
+
     //---------------------------------------------------
     //スタート
     //---------------------------------------------------
@@ -158,7 +163,14 @@ public class PlayerController : MonoBehaviour
 
             myAnimator.SetTrigger("PreAttack");
         }
+        //ガード
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            //動けなくする
+            isRun = false;
 
+            myAnimator.SetTrigger("Guard");
+        }
 
     }
 
@@ -384,28 +396,51 @@ public class PlayerController : MonoBehaviour
 
     public void PreAttackStart()
     {
+        //攻撃開始を知らせる（追加）
+        otherPlayer.GetComponent<PlayerController>().isBeAttacked = true;
+
         Debug.Log("PreAttackStart");
     }
 
     public void AttackStart()
     {
-        //衝突をオン
-        //this.attackObject.SetActive(true);
-        //this.attackObject.GetComponent<BoxCollider2D>().enabled = true;
         //攻撃を生成
         attackObject = Instantiate(attackPrefab, this.transform.position + new Vector3(1.29f * transform.localScale.x, 1.44f, 0f), Quaternion.identity);
+
         Debug.Log("AttackStart");
     }
 
     public void AttackEnd()
     {
-        //衝突をオフ
-        //this.attackObject.SetActive(false);
-        //this.attackObject.GetComponent<BoxCollider2D>().enabled = false;
+        //攻撃終了を知らせる（追加）
+        otherPlayer.GetComponent<PlayerController>().isBeAttacked = false;
+
         //攻撃を破棄する
         Destroy(attackObject.gameObject);
+
+        //動けるようになる
         isRun = true;
+
         Debug.Log("AttackEnd");
+    }
+
+    public void GuardStart()
+    {
+        //ガード開始
+        isGuard = true;
+
+        Debug.Log("GuardStart");
+    }
+
+    public void GuardEnd()
+    {
+        //ガード終了
+        isGuard = false;
+
+        //動けるようになる
+        isRun = true;
+
+        Debug.Log("GuardEnd");
     }
 
     /*
