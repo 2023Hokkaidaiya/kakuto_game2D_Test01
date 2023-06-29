@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D myRigidbody;
 
     //移動量（定数）
-    private float VELOCITY = 2.5f;
+    private float VELOCITY = 6.5f;
 
     //ジャンプ量（定数）
     private float JUMPPOWER = 6.0f;
