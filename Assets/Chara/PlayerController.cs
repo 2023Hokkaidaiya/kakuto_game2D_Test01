@@ -195,177 +195,233 @@ public class PlayerController : MonoBehaviour
     //----------------------------------------------------
 
     // 状態(列挙)
-    private enum states : int { Idoling = 0, Advance, Wait, Approach, Back, Attack,  Guard };
+    private enum states : int { Thinking = 0, Forward, Back, Attack, Guard, Damage, Approach };
+
+    //Idoling = 0, Advance, Wait, Approach, Back, Attack,  Guard };
 
     void PlayerComuter()
     {
         //相手の距離
         float length = getLength(this.transform.position, otherPlayer.transform.position);
-        //Debug.Log("length" + length);
 
         //状態
         switch (stateNumber)
         {
-            //待機（スタート）
-            case (int)states.Idoling:
-                {
-                    if (timerCounter > 3.0f)
-                    {
-                        //状態を遷移
-                        stateNumber = (int)states.Advance;
-                    }
-                }
-                break;
-
-            //少し近づく
-            case (int)states.Advance:
-                {
-                    //プレイヤーが遠いか
-                    if (length > 5.0f)
-                    {
-                        myAnimator.SetInteger("Run", 1);
-                        this.myRigidbody.velocity = new Vector2(VELOCITY * transform.localScale.x, this.myRigidbody.velocity.y);
-
-                    }
-                    else
-                    {
-                        //停止
-                        myAnimator.SetInteger("Run", 0);
-                        this.myRigidbody.velocity = new Vector2(0f, this.myRigidbody.velocity.y);
-
-                        //リセット
-                        timerCounter = 0.0f;
-                        //状態を遷移
-                        stateNumber = (int)states.Wait;
-                    }
-                }
-                break;
-
-            //待機(次の行動考える）
-            case (int)states.Wait:
+            case (int)states.Thinking:
                 {
                     //停止
                     myAnimator.SetInteger("Run", 0);
                     this.myRigidbody.velocity = new Vector2(0f, this.myRigidbody.velocity.y);
+
                     //タイマー
-                    if (timerCounter > 3.0f)
+                    if (timerCounter > 1.0f)
                     {
-                        //向こうから近付いてきたか
-                        if (length < 3.0f)
+                        //次の行動を決める
+
+                        //相手まで5メートル以上？
+                        if (length > 5.0f)
                         {
-                            //リセット
+                            //クリアー
                             timerCounter = 0.0f;
-                            //状態を遷移
-                            stateNumber = (int)states.Back;
+
+                            //遷移
+                            stateNumber = (int)states.Forward;
                         }
                         else
                         {
-                            //リセット
-                            timerCounter = 0.0f;
-                            //状態を遷移
-                            stateNumber = (int)states.Approach;
+                            //相手まで2メートル以下？
+                            if (length < 2.0f)
+                            {
+                                //攻撃が当たる、または相手の攻撃が当たる
+
+                                //相手が攻撃開始？
+                                if (isBeAttacked)
+                                {
+                                    //ガードの開始
+                                    myAnimator.SetTrigger("Guard");
+
+                                    //クリアー
+                                    timerCounter = 0.0f;
+
+                                    //遷移
+                                    stateNumber = (int)states.Guard;
+                                }
+                                else
+                                {
+                                    //例えば相手のライフと自分のライフを比較
+
+                                    //がんがんいこうぜ = 7
+                                    //ふつう = 5
+                                    //いのちだいじに = 3
+
+                                    int random = 3;
+
+                                    //ランダム（30～70%）
+                                    if (Random.Range(1, 11) <= random)
+                                    {
+                                        //攻撃の開始
+                                        myAnimator.SetTrigger("PreAttack");
+
+                                        //クリアー
+                                        timerCounter = 0.0f;
+
+                                        //遷移
+                                        stateNumber = (int)states.Attack;
+                                    }
+                                    else
+                                    {
+                                        //クリアー
+                                        timerCounter = 0.0f;
+
+                                        //遷移
+                                        stateNumber = (int)states.Back;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                //例えば相手のライフと自分のライフを比較
+
+                                //がんがんいこうぜ = 7
+                                //ふつう = 5
+                                //いのちだいじに = 3
+
+                                int random = 3;
+
+                                //ランダム（30～70%）
+                                if (Random.Range(1, 11) <= random)
+                                {
+                                    //クリアー
+                                    timerCounter = 0.0f;
+
+                                    //遷移
+                                    stateNumber = (int)states.Approach;
+                                }
+                                else
+                                {
+                                    //クリアー
+                                    timerCounter = 0.0f;
+
+                                    //遷移
+                                    stateNumber = (int)states.Back;
+                                }
+                            }
                         }
                     }
                 }
                 break;
 
-            //攻撃可能距離に近づく
-            case (int)states.Approach:
+            case (int)states.Forward:
                 {
-                    if (length > 2.0f)
-                    {
-                        myAnimator.SetInteger("Run", 1);
-                        this.myRigidbody.velocity = new Vector2(VELOCITY * transform.localScale.x, this.myRigidbody.velocity.y);
-                        //リセット
-                        timerCounter = 0.0f;
-                        //状態を遷移
-                        stateNumber = (int)states.Attack;
-                    }
-                    else
-                    {
-                        //停止
-                        myAnimator.SetInteger("Run", 0);
-                        this.myRigidbody.velocity = new Vector2(0f, this.myRigidbody.velocity.y);
-                        //リセット
-                        timerCounter = 0.0f;
-                        //状態を遷移
-                        stateNumber = (int)states.Back;
-                    }
-                }
-                break;
+                    myAnimator.SetInteger("Run", 1);
+                    this.myRigidbody.velocity = new Vector2(VELOCITY * transform.localScale.x, this.myRigidbody.velocity.y);
 
-            //少し離れる
-            case (int)states.Back:
-                {
-                    //プレイヤーが近い
+                    //相手まで5メートル以下？
                     if (length < 5.0f)
                     {
-                        myAnimator.SetInteger("Run", -1);
-                        this.myRigidbody.velocity = new Vector2(-VELOCITY * transform.localScale.x, this.myRigidbody.velocity.y);
-                        //リセット
-                        timerCounter = 0.0f;
-                        //状態を遷移
-                        stateNumber = (int)states.Guard;
-                    }
-                    else
-                    {
-                        //停止
-                        myAnimator.SetInteger("Run", 0);
-                        this.myRigidbody.velocity = new Vector2(0f, this.myRigidbody.velocity.y);
-                        //リセット
-                        timerCounter = 0.0f;
-                        //状態を遷移
-                        stateNumber = (int)states.Approach;
+                        //クリアー
+                        //timerCounter = 0.0f;
+                        timerCounter = Random.Range(0.0f, 0.5f);
+
+                        //遷移
+                        stateNumber = (int)states.Thinking;
                     }
                 }
                 break;
 
-            //Attack
+            case (int)states.Back:
+                {
+                    myAnimator.SetInteger("Run", -1);
+                    this.myRigidbody.velocity = new Vector2(-VELOCITY * transform.localScale.x, this.myRigidbody.velocity.y);
+
+                    //相手まで7メートル以上？
+                    if (length > 7.0f)
+                    {
+                        //クリアー
+                        //timerCounter = 0.0f;
+                        timerCounter = Random.Range(0.0f, 0.5f);
+
+                        //遷移
+                        stateNumber = (int)states.Thinking;
+                    }
+                }
+                break;
+
             case (int)states.Attack:
                 {
-                    //停止
-                    myAnimator.SetInteger("Run", 0);
-                    this.myRigidbody.velocity = new Vector2(0f, this.myRigidbody.velocity.y);
-                    
-                    myAnimator.SetTrigger("PreAttack");
-                    
-                    //リセット
-                    timerCounter = 0.0f;
-                    //状態を遷移
-                    stateNumber = (int)states.Wait;
+                    //アニメーション終了までの待機
+                    if (timerCounter > 3.0f)
+                    {
+                        //クリアー
+                        //timerCounter = 0.0f;
+                        timerCounter = Random.Range(-0.5f, 0.0f);
+
+                        //遷移
+                        stateNumber = (int)states.Thinking;
+                    }
                 }
                 break;
 
-
-
-
-            //Guard
             case (int)states.Guard:
                 {
-                    //停止
-                    myAnimator.SetInteger("Run", 0);
-                    this.myRigidbody.velocity = new Vector2(0f, this.myRigidbody.velocity.y);
-                    //ガード
-                    myAnimator.SetTrigger("Guard");
-                    
-                    //リセット
-                    timerCounter = 0.0f;
-                    //状態を遷移
-                    stateNumber = (int)states.Wait;
+                    //アニメーション終了までの待機
+                    if (timerCounter > 1.0f)
+                    {
+                        //クリアー
+                        //timerCounter = 0.0f;
+                        timerCounter = Random.Range(0.0f, 0.5f);
+
+                        //遷移
+                        stateNumber = (int)states.Thinking;
+                    }
                 }
                 break;
+
+            case (int)states.Damage:
+                {
+                    //アニメーション終了までの待機
+                    if (timerCounter > 2.0f)
+                    {
+                        //クリアー
+                        //timerCounter = 0.0f;
+                        timerCounter = Random.Range(-1.0f, 0.0f);
+
+                        //遷移
+                        stateNumber = (int)states.Thinking;
+                    }
+                }
+                break;
+
+            case (int)states.Approach:
+                {
+                    myAnimator.SetInteger("Run", 1);
+                    this.myRigidbody.velocity = new Vector2(VELOCITY * transform.localScale.x, this.myRigidbody.velocity.y);
+
+                    //相手まで2メートル以下？
+                    if (length < 2.0f)
+                    {
+                        //クリアー
+                        //timerCounter = 0.0f;
+                        timerCounter = Random.Range(0.0f, 0.5f);
+
+                        //遷移
+                        stateNumber = (int)states.Thinking;
+                    }
+                }
+                break;
+
         }
 
         //デバッグ
         switch (stateNumber)
         {
-            case 0: stateText.GetComponent<Text>().text = "Idoling"; break;
-            case 1: stateText.GetComponent<Text>().text = "Advance"; break;
-            case 2: stateText.GetComponent<Text>().text = "Wait"; break;
-            case 3: stateText.GetComponent<Text>().text = "Approach"; break;
-            case 4: stateText.GetComponent<Text>().text = "Back"; break;
-            case 5: stateText.GetComponent<Text>().text = "Attack"; break;
-            case 6: stateText.GetComponent<Text>().text = "Guard"; break;
+            case 0: stateText.GetComponent<Text>().text = "Thinking " + length.ToString("F3"); break;
+            case 1: stateText.GetComponent<Text>().text = "Forward " + length.ToString("F3"); break;
+            case 2: stateText.GetComponent<Text>().text = "Back " + length.ToString("F3"); break;
+            case 3: stateText.GetComponent<Text>().text = "Attack " + length.ToString("F3"); break;
+            case 4: stateText.GetComponent<Text>().text = "Guard " + length.ToString("F3"); break;
+            case 5: stateText.GetComponent<Text>().text = "Damage " + length.ToString("F3"); break;
+            case 6: stateText.GetComponent<Text>().text = "Approach " + length.ToString("F3"); break;
         }
 
         //タイマー
@@ -443,6 +499,14 @@ public class PlayerController : MonoBehaviour
         Debug.Log("GuardEnd");
     }
 
+    public void DamageEnd()
+    {
+        //動けるようになる
+        isRun = true;
+
+        Debug.Log("DamageEnd");
+    }
+
     /*
     private void FixedUpdate()
     {
@@ -465,25 +529,52 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Attack")
         {
+            //ダメージのアニメーション
             myAnimator.SetTrigger("Damage");
 
             if (assign == 1)
             {
-                hpManager.GetComponent<HPManager>().HPLeft-= TitleController.assign2Attack;
+                //動けるなくなる
+                isRun = false;
+
+                if (isGuard == false)
+                {
+                    //ダメージ効果音
+
+                    hpManager.GetComponent<HPManager>().HPLeft -= TitleController.assign2Attack;
+                }
+                else
+                {
+                    //ガード効果音
+                }
 
                 //プレイヤーがダメージを受けた
                 //吹っ飛ぶ
-                myRigidbody.AddForce(new Vector3(-5000f * transform.localScale.x, 0f, 0f));
-
+                //myRigidbody.AddForce(new Vector3(-5000f * transform.localScale.x, 0f, 0f));
+                myRigidbody.AddForce(new Vector3(-5f * transform.localScale.x, 0f, 0f), ForceMode2D.Impulse);
             }
             else if (assign == -2)
             {
-                //プレイヤー（COM)がダメージを受けた
-                hpManager.GetComponent<HPManager>().HPRight -= TitleController.assign1Attack;
-                //吹っ飛ぶ
-                myRigidbody.AddForce(new Vector3(-5000f * transform.localScale.x, 0f, 0f));
-            }
+                //クリアー
+                timerCounter = 0.0f;
 
+                //遷移
+                stateNumber = (int)states.Damage;
+
+                if (isGuard == false)
+                {
+                    //プレイヤー（COM)がダメージを受けた
+                    hpManager.GetComponent<HPManager>().HPRight -= TitleController.assign1Attack;
+                }
+                else
+                {
+                    //ガード効果音
+                }
+
+                //吹っ飛ぶ
+                //myRigidbody.AddForce(new Vector3(-5000f * transform.localScale.x, 0f, 0f));
+                myRigidbody.AddForce(new Vector3(-5f * transform.localScale.x, 0f, 0f), ForceMode2D.Impulse);
+            }
         }
     }
     void OnCollisionEnter2D(Collision2D other)

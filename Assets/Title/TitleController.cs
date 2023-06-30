@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class TitleController : MonoBehaviour
 {
-    static public int assign1Attack = 0;　//UIで値を変更させる。
-    static public int assign2Attack = 0;　//UIで値を変更させる。
+    static public int assign1Attack = 1;　//UIで値を変更させる。
+    static public int assign2Attack = 1;　//UIで値を変更させる。
     public string sceneName; //読み込むシーン名
     public Slider sliderObject1; // sliderObject1変数を定義
     public Slider sliderObject2; // sliderObject2変数を定義
