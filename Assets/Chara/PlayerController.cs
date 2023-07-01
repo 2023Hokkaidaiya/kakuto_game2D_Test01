@@ -78,14 +78,14 @@ public class PlayerController : MonoBehaviour
         //Õ“Ë”»’èdake‚ğƒfƒBƒXƒG[ƒuƒ‹
         //this.attackObject.GetComponent<BoxCollider2D>().enabled = false;
 
-        //ƒAƒTƒCƒ“‚P¨Leftstate@ƒAƒTƒCƒ“‚Q¨Rightstate
-        if (assign == 1)
-        {
+        //ƒAƒTƒCƒ“‚P¨Leftstate@ƒAƒTƒCƒ“‚Q¨Rightstate(’Êí‚PVS-2j
+        if (assign == 1 || assign == -1)
+            {
             //ƒvƒŒƒCƒ„[
             this.stateText = GameObject.Find("Leftstate");
         }
-        else if (assign == -2)
-        {
+        else if (assign == 2 || assign == -2)
+            {
             //ƒvƒŒƒCƒ„[iCOM)
             this.stateText = GameObject.Find("Rightstate");
         }
@@ -434,12 +434,12 @@ public class PlayerController : MonoBehaviour
     //QQQQQQQQQQQQQQQQQQQQQQQQ
     void Update()
     {
-        if (assign == 1)
+        if (assign == 1 || assign == 2)
         {
             //ƒvƒŒƒCƒ„[
             Player();
         }
-        else if (assign == -2)
+        else if (assign == -2 || assign == -1)
         {
             //ƒvƒŒƒCƒ„[iCOM)
             PlayerComuter();
