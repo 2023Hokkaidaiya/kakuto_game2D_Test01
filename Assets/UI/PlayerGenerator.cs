@@ -8,12 +8,14 @@ public class PlayerGenerator : MonoBehaviour
     //PlayerPrefab‚ğ“ü‚ê‚é
     public GameObject Player1Prefab;
     public GameObject Player2Prefab;
+    public GameObject Player1DeathBrowPrefab;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         //Player1‚Æ2‚ğŠ’è‚ÌˆÊ’u‚É¶¬‚·‚é
-        GameObject Player1 = Instantiate(Player1Prefab);
+        GameObject Player1 = Instantiate(Player1DeathBrowPrefab);
         GameObject Player2 = Instantiate(Player2Prefab);
         Player1.transform.position = new Vector2(-6f, -3.21048f);
         Player2.transform.position = new Vector2(6f, -3.21048f);

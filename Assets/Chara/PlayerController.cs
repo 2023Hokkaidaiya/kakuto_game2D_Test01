@@ -460,10 +460,22 @@ public class PlayerController : MonoBehaviour
 
     public void AttackStart()
     {
-        //UŒ‚‚ğ¶¬
-        attackObject = Instantiate(attackPrefab, this.transform.position + new Vector3(1.29f * transform.localScale.x, 1.44f, 0f), Quaternion.identity);
+        //
+        if (gameObject.name == "Player1DeathBrowPrefab")
+        {
+            //UŒ‚‚ğ¶¬(3”{‰¡‚É‘å‚«‚­‚µ‚Ä‚¢‚éj
+            attackObject = Instantiate(attackPrefab, this.transform.position + new Vector3(1.29f * transform.localScale.x, 1.44f * 3f, 0f), Quaternion.identity);
 
-        Debug.Log("AttackStart");
+            Debug.Log("AttackStart");
+        }
+        else
+        {
+            //UŒ‚‚ğ¶¬
+            attackObject = Instantiate(attackPrefab, this.transform.position + new Vector3(1.29f * transform.localScale.x, 1.44f, 0f), Quaternion.identity);
+
+            Debug.Log("AttackStart");
+        }
+     
     }
 
     public void AttackEnd()
