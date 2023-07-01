@@ -21,7 +21,7 @@ public class PlayerGenerator : MonoBehaviour
         Player1.GetComponent<PlayerController>().otherPlayer = Player2;
         Player2.GetComponent<PlayerController>().otherPlayer = Player1;
         //assignの再設定も可能 ※左:1 右:2 / COM 左：-1 右：-2
-        Player1.GetComponent<PlayerController>().assign = -1;
+        Player1.GetComponent<PlayerController>().assign = 1;
         Player2.GetComponent<PlayerController>().assign = -2;
     }
 
