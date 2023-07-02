@@ -54,6 +54,8 @@ public class PlayerGenerator : MonoBehaviour
         Player1.transform.position = position;
         //プレイヤーは使用していないが、COM用に相手を設定
         Player1.GetComponent<PlayerController>().otherPlayer = Player2;
+        //クロスする形で登録する
+        Player2.GetComponent<PlayerController>().otherPlayer = Player1;
         //キーボードで動かす
         Player1.GetComponent<PlayerController>().assign = 1;
     }
