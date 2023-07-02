@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public class PlayerGenerator : MonoBehaviour
@@ -10,7 +11,8 @@ public class PlayerGenerator : MonoBehaviour
     public GameObject Player1Prefab;
     public GameObject Player2Prefab;
     public GameObject Player1DeathBrowPrefab;
-
+    private GameObject Player1;
+    private GameObject Player2;
 
 
 
@@ -18,8 +20,9 @@ public class PlayerGenerator : MonoBehaviour
     void Start()
     {
         //Player1と2を所定の位置に生成する
-        GameObject Player1 = Instantiate(Player1Prefab);
-        GameObject Player2 = Instantiate(Player2Prefab);
+        Player1 = Instantiate(Player1Prefab);
+        Player2 = Instantiate(Player2Prefab);
+
         Player1.transform.position = new Vector2(-6f, -3.21048f);
         Player2.transform.position = new Vector2(6f, -3.21048f);
         //OtherPlayerへクロスさせて登録する。（追加）
@@ -33,16 +36,26 @@ public class PlayerGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ChangePlayer1toPlayerDeathBrow();
+        }
     }
     //アサイン1の入れ替え(数値の１を押下するとPlayer1→Player1DeathBrow）
     public void ChangePlayer1toPlayerDeathBrow()
     {
-        //入れ替え直前のポジションを取得(クローンを取得したいができていない）
-        Vector3 position = Player1Prefab.transform.position;
-        Destroy(this.gameObject, 0.0f);
-        //positionで取得した位置に生成したいが未了です
-        GameObject Player1 = Instantiate(Player1DeathBrowPrefab);
+        //入れ替え直前のポジションを取得
+        Vector3 position = Player1.transform.position;
+        //ポジションが取得できたの破棄
+        Destroy(Player1.gameObject, 0.0f);
+        //新しいプレイヤーを生成
+        Player1 = Instantiate(Player1DeathBrowPrefab);
+        //positionで取得した位置を設定
+        Player1.transform.position = position;
+        //プレイヤーは使用していないが、COM用に相手を設定
+        Player1.GetComponent<PlayerController>().otherPlayer = Player2;
+        //キーボードで動かす
+        Player1.GetComponent<PlayerController>().assign = 1;
     }
 
     //アサイン1を戻す
