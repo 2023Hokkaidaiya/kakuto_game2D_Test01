@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerGenerator : MonoBehaviour
 {
 
@@ -9,6 +10,7 @@ public class PlayerGenerator : MonoBehaviour
     public GameObject Player1Prefab;
     public GameObject Player2Prefab;
     public GameObject Player1DeathBrowPrefab;
+
     
 
     // Start is called before the first frame update

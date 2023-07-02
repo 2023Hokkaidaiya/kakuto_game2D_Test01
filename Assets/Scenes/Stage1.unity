@@ -465,7 +465,7 @@ RectTransform:
   - {fileID: 662803122}
   - {fileID: 1809039271}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -536,7 +536,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &973031051
 PrefabInstance:
@@ -843,8 +843,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player1Prefab: {fileID: 1349986854136124472, guid: e47feddf9be967a43a95ff910fbb8913, type: 3}
-  Player2Prefab: {fileID: 4472647597837885718, guid: 85f99699a934ab74395ea9f832cb1e17, type: 3}
-  Player1DeathBrowPrefab: {fileID: 0}
+  Player2Prefab: {fileID: 4323413627911704810, guid: 9b836b7bf4a6743499d300c862927afd, type: 3}
+  Player1DeathBrowPrefab: {fileID: 7946381793721884286, guid: 1f5f08b1bc3e7814ca91935a4a9ab667, type: 3}
 --- !u!4 &1457005178
 Transform:
   m_ObjectHideFlags: 0

@@ -35,11 +35,15 @@ public class PlayerController : MonoBehaviour
     //攻撃オブジェクト
     private GameObject attackObject;
 
+    //攻撃オブジェクト２（DeathBrow）
+    private GameObject deathbrowObject;
+
     //プレイヤーか敵か　左：「１」　右：２　、COM　左：-1、右：「－2」
     public int assign;
 
     //攻撃のPrefab
     public GameObject attackPrefab;
+    public GameObject deathbrowPrefab;
 
     //HPmaga
     private GameObject hpManager;
@@ -461,10 +465,10 @@ public class PlayerController : MonoBehaviour
     public void AttackStart()
     {
         //
-        if (gameObject.name == "Player1DeathBrowPrefab")
+        if (gameObject.name == "Player1DeathBrowPrefab(Clone)")
         {
             //攻撃を生成(3倍横に大きくしている）
-            attackObject = Instantiate(attackPrefab, this.transform.position + new Vector3(1.29f * transform.localScale.x, 1.44f * 3f, 0f), Quaternion.identity);
+            deathbrowObject = Instantiate(deathbrowPrefab, this.transform.position + new Vector3(5f * transform.localScale.x, 1.44f, 0f), Quaternion.identity);
 
             Debug.Log("AttackStart");
         }
@@ -483,9 +487,15 @@ public class PlayerController : MonoBehaviour
         //攻撃終了を知らせる（追加）
         otherPlayer.GetComponent<PlayerController>().isBeAttacked = false;
 
-        //攻撃を破棄する
-        Destroy(attackObject.gameObject);
-
+        if(gameObject.name == "Player1DeathBrowPrefab(Clone)")
+        {
+            Destroy(deathbrowObject.gameObject);
+        }
+        else
+        {
+            //攻撃を破棄する
+            Destroy(attackObject.gameObject);
+        }
         //動けるようになる
         isRun = true;
 
