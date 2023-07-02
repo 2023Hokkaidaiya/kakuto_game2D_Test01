@@ -11,13 +11,14 @@ public class PlayerGenerator : MonoBehaviour
     public GameObject Player2Prefab;
     public GameObject Player1DeathBrowPrefab;
 
-    
+
+
 
     // Start is called before the first frame update
     void Start()
     {
         //Player1と2を所定の位置に生成する
-        GameObject Player1 = Instantiate(Player1DeathBrowPrefab);
+        GameObject Player1 = Instantiate(Player1Prefab);
         GameObject Player2 = Instantiate(Player2Prefab);
         Player1.transform.position = new Vector2(-6f, -3.21048f);
         Player2.transform.position = new Vector2(6f, -3.21048f);
@@ -34,7 +35,16 @@ public class PlayerGenerator : MonoBehaviour
     {
         
     }
-    //アサイン1の入れ替え
+    //アサイン1の入れ替え(数値の１を押下するとPlayer1→Player1DeathBrow）
+    public void ChangePlayer1toPlayerDeathBrow()
+    {
+        //入れ替え直前のポジションを取得(クローンを取得したいができていない）
+        Vector3 position = Player1Prefab.transform.position;
+        Destroy(this.gameObject, 0.0f);
+        //positionで取得した位置に生成したいが未了です
+        GameObject Player1 = Instantiate(Player1DeathBrowPrefab);
+    }
+
     //アサイン1を戻す
     //アサイン2の入れ替え
     //アサイン2を戻す
