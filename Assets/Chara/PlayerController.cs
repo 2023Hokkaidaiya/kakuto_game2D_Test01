@@ -47,19 +47,31 @@ public class PlayerController : MonoBehaviour
 
     //HPmaga
     private GameObject hpManager;
+
     //相手(インスペクターでクロスさせてください）
     public GameObject otherPlayer;
+
     //状態（ステートマシン）
     private int stateNumber;
+
     //汎用タイマー
     private float timerCounter;
+
     //debagテキスト
     public GameObject stateText;
 
     //攻撃を受ける（相手から知らされる）
     public bool isBeAttacked = false;
+
     //ガードしている
     private bool isGuard = false;
+
+    //SoundEffect
+    public AudioClip SE1Slashed; //ザシュッっとした音
+    public AudioClip SE2SoundOfSword; //ガードした時の剣戟音
+    public AudioClip SE3Footsteps; //足音
+
+    //
 
     //---------------------------------------------------
     //スタート
@@ -529,6 +541,11 @@ public class PlayerController : MonoBehaviour
         Debug.Log("DamageEnd");
     }
 
+    public void Footsteps()
+    {
+        GetComponent<AudioSource>().PlayOneShot(SE3Footsteps);
+    }
+
     /*
     private void FixedUpdate()
     {
@@ -562,12 +579,15 @@ public class PlayerController : MonoBehaviour
                 if (isGuard == false)
                 {
                     //ダメージ効果音
-
+                    GetComponent<AudioSource>().PlayOneShot(SE1Slashed); 
+                    //ダメージを反映
                     hpManager.GetComponent<HPManager>().HPLeft -= TitleController.assign2Attack;
                 }
                 else
                 {
                     //ガード効果音
+                    //ガード成功したのでダメージを受けない
+                    GetComponent<AudioSource>().PlayOneShot(SE2SoundOfSword);
                 }
 
                 //プレイヤーがダメージを受けた
@@ -591,6 +611,7 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     //ガード効果音
+                    GetComponent<AudioSource>().PlayOneShot(SE2SoundOfSword);
                 }
 
                 //吹っ飛ぶ
