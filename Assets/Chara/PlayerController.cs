@@ -324,6 +324,26 @@ public class PlayerController : MonoBehaviour
                             }
                         }
                     }
+                    else 
+                    {
+                        //n秒ボートしてる
+                        if (length < 2.0f)
+                        {
+                            //相手が攻撃開始？
+                            if (isBeAttacked)
+                            {
+                                //ガードの開始
+                                myAnimator.SetTrigger("Guard");
+
+                                //クリアー
+                                timerCounter = 0.0f;
+
+                                //遷移
+                                stateNumber = (int)states.Guard;
+                            }
+                        }
+                    }
+
                 }
                 break;
 
@@ -360,6 +380,36 @@ public class PlayerController : MonoBehaviour
                         //遷移
                         stateNumber = (int)states.Thinking;
                     }
+                    //左Com
+                    if(assign == -1)
+                    {
+                        //左端
+                        if(this.transform.position.x < -7.8)
+                        {
+                            //クリア
+                            //timerCounter = 0.0f;
+                            timerCounter = Random.Range(0.0f, 0.5f);
+
+                            //遷移
+                            stateNumber = (int)states.Thinking;
+                        }
+
+                    }
+                    //右Com
+                    if(assign == -2)
+                    {
+                        //右端
+                        if (this.transform.position.x > 7.8)
+                        {
+                            //クリア
+                            //timerCounter = 0.0f;
+                            timerCounter = Random.Range(0.0f, 0.5f);
+
+                            //遷移
+                            stateNumber = (int)states.Thinking;
+                        }
+                    }
+
                 }
                 break;
 
@@ -396,11 +446,11 @@ public class PlayerController : MonoBehaviour
             case (int)states.Damage:
                 {
                     //アニメーション終了までの待機
-                    if (timerCounter > 2.0f)
+                    if (timerCounter > 0.1f)
                     {
                         //クリアー
-                        //timerCounter = 0.0f;
-                        timerCounter = Random.Range(-1.0f, 0.0f);
+                        timerCounter = 0.4f;
+                        //timerCounter = Random.Range(-1.0f, 0.0f);
 
                         //遷移
                         stateNumber = (int)states.Thinking;
@@ -435,7 +485,7 @@ public class PlayerController : MonoBehaviour
             case 1: stateText.GetComponent<Text>().text = "Forward " + length.ToString("F3"); break;
             case 2: stateText.GetComponent<Text>().text = "Back " + length.ToString("F3"); break;
             case 3: stateText.GetComponent<Text>().text = "Attack " + length.ToString("F3"); break;
-            case 4: stateText.GetComponent<Text>().text = "Guard " + length.ToString("F3"); break;
+            case 4: stateText.GetComponent<Text>().text = "Guard " + length.ToString("F3") + "" + isGuard; break;
             case 5: stateText.GetComponent<Text>().text = "Damage " + length.ToString("F3"); break;
             case 6: stateText.GetComponent<Text>().text = "Approach " + length.ToString("F3"); break;
         }
@@ -568,8 +618,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Attack")
         {
-            //ダメージのアニメーション
-            myAnimator.SetTrigger("Damage");
+            
 
             if (assign == 1)
             {
@@ -578,13 +627,18 @@ public class PlayerController : MonoBehaviour
 
                 if (isGuard == false)
                 {
+                    //ダメージのアニメーション
+                    myAnimator.SetTrigger("Damage");
+
                     //ダメージ効果音
                     GetComponent<AudioSource>().PlayOneShot(SE1Slashed); 
+
                     //ダメージを反映
                     hpManager.GetComponent<HPManager>().HPLeft -= TitleController.assign2Attack;
                 }
                 else
                 {
+                    Debug.Log("ガード成功");
                     //ガード効果音
                     //ガード成功したのでダメージを受けない
                     GetComponent<AudioSource>().PlayOneShot(SE2SoundOfSword);
@@ -599,12 +653,16 @@ public class PlayerController : MonoBehaviour
             {
                 //クリアー
                 timerCounter = 0.0f;
-
-                //遷移
-                stateNumber = (int)states.Damage;
-
+                
+                              
                 if (isGuard == false)
                 {
+                    //ダメージのアニメーション
+                    myAnimator.SetTrigger("Damage");
+                    //ダメージ効果音
+                    GetComponent<AudioSource>().PlayOneShot(SE1Slashed);
+                    //遷移
+                    stateNumber = (int)states.Damage;
                     //プレイヤー（COM)がダメージを受けた
                     hpManager.GetComponent<HPManager>().HPRight -= TitleController.assign1Attack;
                 }

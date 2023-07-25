@@ -5,7 +5,10 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - Player1Prefab: {fileID: 1349986854136124472, guid: e47feddf9be967a43a95ff910fbb8913, type: 3}
-  - Player2Prefab: {fileID: 4472647597837885718, guid: 85f99699a934ab74395ea9f832cb1e17, type: 3}
+  - Player2Prefab: {fileID: 4323413627911704810, guid: 9b836b7bf4a6743499d300c862927afd, type: 3}
+  - Player1DeathBrowPrefab: {fileID: 7946381793721884286, guid: 1f5f08b1bc3e7814ca91935a4a9ab667, type: 3}
+  - Player1ImpossiblePrefab: {fileID: 5676909287680799568, guid: 4254dcba0afc2f846a95c50faddf54af, type: 3}
+  - Player2ImpossiblePrefab: {fileID: 3573348419589538637, guid: 5ee574bd5d33f3a47a9b9f28677fa91d, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

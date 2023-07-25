@@ -21,6 +21,8 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300000, guid: c90ba1a681be2fa4b9d4121ddb4fde5f, type: 3}
+    - time: 0.083333336
+      value: {fileID: 21300000, guid: c90ba1a681be2fa4b9d4121ddb4fde5f, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -41,12 +43,13 @@ AnimationClip:
       isPPtrCurve: 1
     pptrCurveMapping:
     - {fileID: 21300000, guid: c90ba1a681be2fa4b9d4121ddb4fde5f, type: 3}
+    - {fileID: 21300000, guid: c90ba1a681be2fa4b9d4121ddb4fde5f, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.016666668
+    m_StopTime: 0.1
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -73,7 +76,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.016666668
+  - time: 0.1
     functionName: GuardEnd
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 3ef100db0794e044aa19cbfef8342d21, type: 3}

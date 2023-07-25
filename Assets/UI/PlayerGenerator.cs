@@ -11,14 +11,20 @@ public class PlayerGenerator : MonoBehaviour
     public GameObject Player1Prefab;
     public GameObject Player2Prefab;
     public GameObject Player1DeathBrowPrefab;
+    public GameObject Player1ImpossiblePrefab;
+    public GameObject Player2ImpossiblePrefab;
     private GameObject Player1;
     private GameObject Player2;
-
+    
+    //HPmanager
+    private GameObject hpManager;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        //HPマネージャオブジェクト
+        hpManager = GameObject.Find("HPManager");
         //Player1と2を所定の位置に生成する
         Player1 = Instantiate(Player1Prefab);
         Player2 = Instantiate(Player2Prefab);
@@ -39,6 +45,11 @@ public class PlayerGenerator : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ChangePlayer1toPlayerDeathBrow();
+        }
+        //左のHPが0以下ならImpossibleと入れ替えるメソッドを使う
+        if (hpManager.GetComponent<HPManager>().HPLeft < 1)
+        {
+            ChangePlayer1toImpossible();
         }
     }
     //アサイン1の入れ替え(数値の１を押下するとPlayer1→Player1DeathBrow）
@@ -63,4 +74,23 @@ public class PlayerGenerator : MonoBehaviour
     //アサイン1を戻す
     //アサイン2の入れ替え
     //アサイン2を戻す
+
+    //HP0になったらImpossibleに入れ替える
+    public void ChangePlayer1toImpossible()
+    {
+        //入れ替え直前のポジションを取得
+        Vector3 position = Player1.transform.position;
+        //ポジションが取得できたの破棄
+        Destroy(Player1.gameObject, 0.0f);
+        //新しいimposibleを生成
+        Player1 = Instantiate(Player1ImpossiblePrefab);
+        //positionで取得した位置を設定
+        Player1.transform.position = position;
+        //プレイヤーは使用していないが、COM用に相手を設定
+        //Player1.GetComponent<PlayerController>().otherPlayer = Player2;
+        //クロスする形で登録する
+        Player2.GetComponent<PlayerController>().otherPlayer = Player1;
+        //キーボードで動かす
+        //Player1.GetComponent<PlayerController>().assign = 1;
+    }
 }
