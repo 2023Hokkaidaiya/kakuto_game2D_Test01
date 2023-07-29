@@ -71,7 +71,11 @@ public class PlayerController : MonoBehaviour
     public AudioClip SE2SoundOfSword; //ガードした時の剣戟音
     public AudioClip SE3Footsteps; //足音
 
-    //
+    //isEnd
+    private bool isEnd = false;
+
+    //Comのガード率　１００で必ずガード　０でしない
+    public int guardRate;
 
     //---------------------------------------------------
     //スタート
@@ -114,80 +118,83 @@ public class PlayerController : MonoBehaviour
     //＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
     void Player()
     {
-        //移動が可能
-        if (isRun)
+        //生きている
+        if (isEnd == false)
         {
-            //移動
-            if (Input.GetKey(KeyCode.LeftArrow))
+            //移動が可能
+            if (isRun)
             {
-                //ジャンプ
-                if (Input.GetKey(KeyCode.Space) && isGround)
+                //移動
+                if (Input.GetKey(KeyCode.LeftArrow))
                 {
-                    //左移動＋ジャンプ
-                    this.myRigidbody.velocity = new Vector2(-VELOCITY, JUMPPOWER);
+                    //ジャンプ
+                    if (Input.GetKey(KeyCode.Space) && isGround)
+                    {
+                        //左移動＋ジャンプ
+                        this.myRigidbody.velocity = new Vector2(-VELOCITY, JUMPPOWER);
+                    }
+                    else
+                    {
+                        myAnimator.SetInteger("Run", -1);
+
+                        //左移動
+                        this.myRigidbody.velocity = new Vector2(-VELOCITY, this.myRigidbody.velocity.y);
+                    }
+                }
+                else if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    //ジャンプ
+                    if (Input.GetKey(KeyCode.Space) && isGround)
+                    {
+                        //右移動＋ジャンプ
+                        this.myRigidbody.velocity = new Vector2(VELOCITY, JUMPPOWER);
+                    }
+                    else
+                    {
+                        myAnimator.SetInteger("Run", 1);
+
+                        //右移動
+                        this.myRigidbody.velocity = new Vector2(VELOCITY, this.myRigidbody.velocity.y);
+                    }
                 }
                 else
                 {
-                    myAnimator.SetInteger("Run", -1);
+                    myAnimator.SetInteger("Run", 0);
 
-                    //左移動
-                    this.myRigidbody.velocity = new Vector2(-VELOCITY, this.myRigidbody.velocity.y);
-                }
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                //ジャンプ
-                if (Input.GetKey(KeyCode.Space) && isGround)
-                {
-                    //右移動＋ジャンプ
-                    this.myRigidbody.velocity = new Vector2(VELOCITY, JUMPPOWER);
-                }
-                else
-                {
-                    myAnimator.SetInteger("Run", 1);
+                    //停止
+                    this.myRigidbody.velocity = new Vector2(0.0f, this.myRigidbody.velocity.y);
 
-                    //右移動
-                    this.myRigidbody.velocity = new Vector2(VELOCITY, this.myRigidbody.velocity.y);
+                    //ジャンプ
+                    if (Input.GetKey(KeyCode.Space) && isGround)
+                    {
+                        //垂直ジャンプ
+                        this.myRigidbody.velocity = new Vector2(0.0f, JUMPPOWER);
+                    }
                 }
             }
             else
             {
-                myAnimator.SetInteger("Run", 0);
-
                 //停止
                 this.myRigidbody.velocity = new Vector2(0.0f, this.myRigidbody.velocity.y);
+            }
 
-                //ジャンプ
-                if (Input.GetKey(KeyCode.Space) && isGround)
-                {
-                    //垂直ジャンプ
-                    this.myRigidbody.velocity = new Vector2(0.0f, JUMPPOWER);
-                }
+            //攻撃
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                //動けなくする
+                isRun = false;
+
+                myAnimator.SetTrigger("PreAttack");
+            }
+            //ガード
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                //動けなくする
+                isRun = false;
+
+                myAnimator.SetTrigger("Guard");
             }
         }
-        else
-        {
-            //停止
-            this.myRigidbody.velocity = new Vector2(0.0f, this.myRigidbody.velocity.y);
-        }
-
-        //攻撃
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            //動けなくする
-            isRun = false;
-
-            myAnimator.SetTrigger("PreAttack");
-        }
-        //ガード
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            //動けなくする
-            isRun = false;
-
-            myAnimator.SetTrigger("Guard");
-        }
-
     }
 
     //----------------------------------------------------
@@ -211,9 +218,9 @@ public class PlayerController : MonoBehaviour
     //----------------------------------------------------
 
     // 状態(列挙)
-    private enum states : int { Thinking = 0, Forward, Back, Attack, Guard, Damage, Approach };
+    private enum states : int { Thinking = 0, Forward, Back, Attack, Guard, Damage, Approach, Die };
 
-    //Idoling = 0, Advance, Wait, Approach, Back, Attack,  Guard };
+    //Idoling = 0, Advance, Wait, Approach, Back, Attack,  Guard ,Die};
 
     void PlayerComuter()
     {
@@ -251,7 +258,7 @@ public class PlayerController : MonoBehaviour
                                 //攻撃が当たる、または相手の攻撃が当たる
 
                                 //相手が攻撃開始？
-                                if (isBeAttacked)
+                                if (isBeAttacked && Random.Range(0,100) <guardRate)
                                 {
                                     //ガードの開始
                                     myAnimator.SetTrigger("Guard");
@@ -330,7 +337,7 @@ public class PlayerController : MonoBehaviour
                         if (length < 2.0f)
                         {
                             //相手が攻撃開始？
-                            if (isBeAttacked)
+                            if (isBeAttacked && Random.Range(0, 100) < guardRate)
                             {
                                 //ガードの開始
                                 myAnimator.SetTrigger("Guard");
@@ -340,6 +347,10 @@ public class PlayerController : MonoBehaviour
 
                                 //遷移
                                 stateNumber = (int)states.Guard;
+                            }
+                            else
+                            {
+                                Debug.Log("ガードキャンセル");
                             }
                         }
                     }
@@ -416,7 +427,7 @@ public class PlayerController : MonoBehaviour
             case (int)states.Attack:
                 {
                     //アニメーション終了までの待機
-                    if (timerCounter > 3.0f)
+                    if (timerCounter > 1.0f)
                     {
                         //クリアー
                         //timerCounter = 0.0f;
@@ -476,6 +487,12 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
 
+            case (int)states.Die:
+                {
+                    //何もしない
+                }
+                break;
+
         }
 
         //デバッグ
@@ -488,6 +505,7 @@ public class PlayerController : MonoBehaviour
             case 4: stateText.GetComponent<Text>().text = "Guard " + length.ToString("F3") + "" + isGuard; break;
             case 5: stateText.GetComponent<Text>().text = "Damage " + length.ToString("F3"); break;
             case 6: stateText.GetComponent<Text>().text = "Approach " + length.ToString("F3"); break;
+            case 7: stateText.GetComponent<Text>().text = "Die " + length.ToString("F3"); break;
         }
 
         //タイマー
@@ -521,7 +539,7 @@ public class PlayerController : MonoBehaviour
         //攻撃開始を知らせる（追加）
         otherPlayer.GetComponent<PlayerController>().isBeAttacked = true;
 
-        Debug.Log("PreAttackStart");
+        //Debug.Log("PreAttackStart");
     }
 
     public void AttackStart()
@@ -532,14 +550,14 @@ public class PlayerController : MonoBehaviour
             //攻撃を生成(3倍横に大きくしている）
             deathbrowObject = Instantiate(deathbrowPrefab, this.transform.position + new Vector3(5f * transform.localScale.x, 1.44f, 0f), Quaternion.identity);
 
-            Debug.Log("AttackStart");
+            //Debug.Log("AttackStart");
         }
         else
         {
             //攻撃を生成
             attackObject = Instantiate(attackPrefab, this.transform.position + new Vector3(1.29f * transform.localScale.x, 1.44f, 0f), Quaternion.identity);
 
-            Debug.Log("AttackStart");
+            //Debug.Log("AttackStart");
         }
      
     }
@@ -561,7 +579,7 @@ public class PlayerController : MonoBehaviour
         //動けるようになる
         isRun = true;
 
-        Debug.Log("AttackEnd");
+        //Debug.Log("AttackEnd");
     }
 
     public void GuardStart()
@@ -569,7 +587,7 @@ public class PlayerController : MonoBehaviour
         //ガード開始
         isGuard = true;
 
-        Debug.Log("GuardStart");
+        //Debug.Log("GuardStart");
     }
 
     public void GuardEnd()
@@ -580,7 +598,7 @@ public class PlayerController : MonoBehaviour
         //動けるようになる
         isRun = true;
 
-        Debug.Log("GuardEnd");
+        //Debug.Log("GuardEnd");
     }
 
     public void DamageEnd()
@@ -588,7 +606,7 @@ public class PlayerController : MonoBehaviour
         //動けるようになる
         isRun = true;
 
-        Debug.Log("DamageEnd");
+        //Debug.Log("DamageEnd");
     }
 
     public void Footsteps()
@@ -635,10 +653,19 @@ public class PlayerController : MonoBehaviour
 
                     //ダメージを反映
                     hpManager.GetComponent<HPManager>().HPLeft -= TitleController.assign2Attack;
+
+                    //LifeCheckして
+                    if (hpManager.GetComponent<HPManager>().HPLeft <= 0)
+                    {
+                        //死亡アニメーしょん
+                        myAnimator.SetBool("Die", true);
+                        //終了
+                        isEnd = true;
+                    }
                 }
                 else
                 {
-                    Debug.Log("ガード成功");
+                    //Debug.Log("ガード成功");
                     //ガード効果音
                     //ガード成功したのでダメージを受けない
                     GetComponent<AudioSource>().PlayOneShot(SE2SoundOfSword);
@@ -665,6 +692,16 @@ public class PlayerController : MonoBehaviour
                     stateNumber = (int)states.Damage;
                     //プレイヤー（COM)がダメージを受けた
                     hpManager.GetComponent<HPManager>().HPRight -= TitleController.assign1Attack;
+                    
+                    //LifeCheckして
+                    if (hpManager.GetComponent<HPManager>().HPRight <= 0)
+                    {
+                        //死亡アニメーション
+                        myAnimator.SetBool("Die", true);
+                        //終了
+                        stateNumber = (int)states.Die;
+                    }
+
                 }
                 else
                 {
