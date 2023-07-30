@@ -106,12 +106,30 @@ public class PlayerGenerator : MonoBehaviour
         Destroy(Player1.gameObject, 0.0f);
         Destroy(Player2.gameObject, 0.0f);
         //つばぜり合いを生成
-        Instantiate(CloseContestPrefab, positionMiddle, Quaternion.identity);
+        CloseContest = Instantiate(CloseContestPrefab, positionMiddle, Quaternion.identity);
+
     }
     public void CheckoutCloseContest()
     {
         //入れ替え直前のポジションを取得
-        Vector3 positionMiddle = CloseContestPrefab(Clone).transform.position;
+        Vector3 positionMiddle = CloseContest.transform.position;
+        //ポジションが取得できたの破棄
+        Destroy(CloseContest.gameObject, 0.0f);
+
+        //Player1と2を所定の位置に生成する
+        Player1 = Instantiate(Player1Prefab);
+        Player2 = Instantiate(Player2Prefab);
+
+        Player1.transform.position = new Vector2(positionMiddle.x -1.0f, -3.21048f);
+        Player2.transform.position = new Vector2(positionMiddle.x +1.0f, -3.21048f);
+        //OtherPlayerへクロスさせて登録する。（追加）
+        Player1.GetComponent<PlayerController>().otherPlayer = Player2;
+        Player2.GetComponent<PlayerController>().otherPlayer = Player1;
+        //assignの再設定も可能 ※左:1 右:2 / COM 左：-1 右：-2
+        Player1.GetComponent<PlayerController>().assign = 1;
+        Player2.GetComponent<PlayerController>().assign = -2;
+        //敵のガード率
+        Player2.GetComponent<PlayerController>().guardRate = 5;
     }
     //アサイン1を戻す
     //アサイン2の入れ替え

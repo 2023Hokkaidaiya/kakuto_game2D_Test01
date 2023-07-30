@@ -32,9 +32,8 @@ public class PlayerController : MonoBehaviour
     //移動可能
     private bool isRun = true;
 
-    //攻撃オブジェクト
+    //攻撃オブジェクト(必要に応じて追加）
     private GameObject attackObject;
-
     //攻撃オブジェクト２（DeathBrow）
     private GameObject deathbrowObject;
 
@@ -45,7 +44,7 @@ public class PlayerController : MonoBehaviour
     public GameObject attackPrefab;
     public GameObject deathbrowPrefab;
 
-    //HPmaga
+    //HPマネージャー
     private GameObject hpManager;
 
     //相手(インスペクターでクロスさせてください）
@@ -94,8 +93,7 @@ public class PlayerController : MonoBehaviour
 
         //子オブジェクトを取得
         //this.attackObject = transform.Find("Attack").gameObject;
-
-        //衝突判定dakeをディスエーブル
+        //衝突判定だけをディスエーブル
         //this.attackObject.GetComponent<BoxCollider2D>().enabled = false;
 
         //アサイン１→Leftstate　アサイン２→Rightstate(通常１VS-2）
@@ -721,8 +719,6 @@ public class PlayerController : MonoBehaviour
         {
             isGround = true;
         }
-
-
     }
 
     void OnCollisionStay2D(Collision2D other)
