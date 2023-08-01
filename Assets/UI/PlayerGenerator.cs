@@ -12,8 +12,8 @@ public class PlayerGenerator : MonoBehaviour
     public GameObject Player1Prefab;
     public GameObject Player2Prefab;
     public GameObject Player1DeathBrowPrefab;
-    public GameObject Player1ImpossiblePrefab;
-    public GameObject Player2ImpossiblePrefab;
+    public GameObject Player2DeathBrowPrefab;
+    
     
     private GameObject Player1;
     private GameObject Player2;
@@ -55,6 +55,11 @@ public class PlayerGenerator : MonoBehaviour
         {
             ChangePlayer1toPlayerDeathBrow();
         }
+        //2で敵を必殺技に変える
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ChangePlayer2toPlayerDeathBrow();
+        }
         //0で一枚絵に変える（デバッグ用でありのちに更新すること）
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
@@ -65,11 +70,8 @@ public class PlayerGenerator : MonoBehaviour
         {
             CheckoutCloseContest();
         }
-        //左のHPが0以下ならImpossibleと入れ替えるメソッドを使う
-        if (hpManager.GetComponent<HPManager>().HPLeft < 1)
-        {
-            ChangePlayer1toImpossible();
-        }
+        
+     
     }
 
 
@@ -94,8 +96,25 @@ public class PlayerGenerator : MonoBehaviour
         //キーボードで動かす
         Player1.GetComponent<PlayerController>().assign = 1;
     }
+    public void ChangePlayer2toPlayerDeathBrow()
+    {
+        //入れ替え直前のポジションを取得(Leftを入れ変える)
+        Vector3 positionLeft = Player2.transform.position;
+        //ポジションが取得できたの破棄
+        Destroy(Player2.gameObject, 0.0f);
+        //新しいプレイヤーを生成
+        Player2 = Instantiate(Player2DeathBrowPrefab);
+        //positionで取得した位置を設定
+        Player2.transform.position = positionLeft;
+        //プレイヤーは使用していないが、COM用に相手を設定
+        Player2.GetComponent<PlayerController>().otherPlayer = Player1;
+        //クロスする形で登録する
+        Player1.GetComponent<PlayerController>().otherPlayer = Player2;
+        //ステートマシンで動かす
+        Player2.GetComponent<PlayerController>().assign = -2;
+    }
 
-    //アサイン1とアサイン２を一枚絵に入れ替える(数値の２を押下するとPlayer1,2→クロースコンテスト）
+    //アサイン1とアサイン２を一枚絵に入れ替える(数値の0を押下するとPlayer1,2→クロースコンテスト）
     public void CheckinCloseContest()
     {
         //入れ替え直前のポジションを取得(LとR両方取得)
@@ -136,21 +155,5 @@ public class PlayerGenerator : MonoBehaviour
     //アサイン2を戻す
 
     //HP0になったらImpossibleに入れ替える
-    public void ChangePlayer1toImpossible()
-    {
-        //入れ替え直前のポジションを取得
-        Vector3 positionLeft = Player1.transform.position;
-        //ポジションが取得できたの破棄
-        Destroy(Player1.gameObject, 0.0f);
-        //新しいimposibleを生成
-        Player1 = Instantiate(Player1ImpossiblePrefab);
-        //positionで取得した位置を設定
-        Player1.transform.position = positionLeft;
-        //プレイヤーは使用していないが、COM用に相手を設定
-        //Player1.GetComponent<PlayerController>().otherPlayer = Player2;
-        //クロスする形で登録する
-        Player2.GetComponent<PlayerController>().otherPlayer = Player1;
-        //キーボードで動かす
-        //Player1.GetComponent<PlayerController>().assign = 1;
-    }
+
 }
