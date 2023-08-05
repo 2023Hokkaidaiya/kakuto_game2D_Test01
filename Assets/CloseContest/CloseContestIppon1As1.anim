@@ -70,7 +70,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1
-    functionName: Slashed()
+    functionName: Slashed
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 504242d325322bf4cb6462aa65d32922, type: 3}
     floatParameter: 0
