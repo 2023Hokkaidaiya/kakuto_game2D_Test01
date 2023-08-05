@@ -161,13 +161,12 @@ MonoBehaviour:
     m_Bits: 256
   assign: 1
   attackPrefab: {fileID: 4349576624394864062, guid: e0afaaf1c417f1d49be361a6f6c022bf, type: 3}
-  deathbrowPrefab: {fileID: 3297415426401231000, guid: d0a56ffe0b8123545a69ed24cf9a80f8, type: 3}
-  otherPlayer: {fileID: 4323413627911704810, guid: 9b836b7bf4a6743499d300c862927afd, type: 3}
-  stateText: {fileID: 1507173343679291677, guid: 41c0904b1f4e22f418c7c75d5e328add, type: 3}
+  otherPlayer: {fileID: 0}
   isBeAttacked: 0
   SE1Slashed: {fileID: 8300000, guid: 638281d9ac2005e409f1562606f623c8, type: 3}
   SE2SoundOfSword: {fileID: 8300000, guid: 6e4acae5a7272d74587a3e49eee1db9d, type: 3}
   SE3Footsteps: {fileID: 8300000, guid: 718f60518f9640c48acd419327fb3f2d, type: 3}
+  guardRate: 0
 --- !u!82 &1553084381293447286
 AudioSource:
   m_ObjectHideFlags: 0

@@ -44,7 +44,8 @@ public class PlayerGenerator : MonoBehaviour
         Player1.GetComponent<PlayerController>().assign = 1;
         Player2.GetComponent<PlayerController>().assign = -2;
         //“G‚ÌƒK[ƒh—¦
-        Player2.GetComponent <PlayerController>().guardRate = 5;
+        Player1.GetComponent<PlayerController>().guardRate = 5;
+        Player2.GetComponent<PlayerController>().guardRate = 5;
     }
 
     // Update is called once per frame
@@ -148,6 +149,7 @@ public class PlayerGenerator : MonoBehaviour
         Player1.GetComponent<PlayerController>().assign = 1;
         Player2.GetComponent<PlayerController>().assign = -2;
         //“G‚ÌƒK[ƒh—¦
+        Player1.GetComponent<PlayerController>().guardRate = 5;
         Player2.GetComponent<PlayerController>().guardRate = 5;
     }
     //ƒAƒTƒCƒ“1‚ğ–ß‚·

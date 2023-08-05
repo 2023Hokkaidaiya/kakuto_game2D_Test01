@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 409eaf17962a3464e9ee1f5be2888773, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0c845d5494bb256469c019a60e11287c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -161,9 +161,7 @@ MonoBehaviour:
     m_Bits: 256
   assign: 1
   attackPrefab: {fileID: 4349576624394864062, guid: e0afaaf1c417f1d49be361a6f6c022bf, type: 3}
-  deathbrowPrefab: {fileID: 3297415426401231000, guid: d0a56ffe0b8123545a69ed24cf9a80f8, type: 3}
-  otherPlayer: {fileID: 1349986854136124472, guid: e47feddf9be967a43a95ff910fbb8913, type: 3}
-  stateText: {fileID: 2373154769909932573, guid: 78497d4c14537b74881f9e8f197b674e, type: 3}
+  otherPlayer: {fileID: 0}
   isBeAttacked: 0
   SE1Slashed: {fileID: 8300000, guid: 638281d9ac2005e409f1562606f623c8, type: 3}
   SE2SoundOfSword: {fileID: 8300000, guid: 6e4acae5a7272d74587a3e49eee1db9d, type: 3}
