@@ -70,27 +70,31 @@ public class CloseContestController : MonoBehaviour
             isMovingRight = true;
         }
 
-        // ボタンが離されたら
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            isMovingLeft = false;
-        }
+        //// ボタンが離されたら
+        //if (Input.GetKeyUp(KeyCode.LeftArrow))
+        //{
+        //    isMovingLeft = false;
+        //}
 
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-        {
-            isMovingRight = false;
-        }
+        //if (Input.GetKeyUp(KeyCode.RightArrow))
+        //{
+        //    isMovingRight = false;
+        //}
         //==================================================
         // 左ボタンが押されていれば左方向に力を加える
         if (isMovingLeft)
         {
-            myRigidbody.AddForce(Vector3.left * moveForce, ForceMode2D.Force);
+            //myRigidbody.AddForce(Vector3.left * moveForce, ForceMode2D.Force);
+            myRigidbody.AddForce(Vector3.left * 30f, ForceMode2D.Impulse);
+            isMovingLeft = false;
         }
 
         // 右ボタンが押されていれば右方向に力を加える
         if (isMovingRight)
         {
-            myRigidbody.AddForce(Vector3.right * moveForce, ForceMode2D.Force);
+            //myRigidbody.AddForce(Vector3.right * moveForce, ForceMode2D.Force);
+            myRigidbody.AddForce(Vector3.right * 30f, ForceMode2D.Impulse);
+            isMovingRight = false;
         }
         //===================================================
     }

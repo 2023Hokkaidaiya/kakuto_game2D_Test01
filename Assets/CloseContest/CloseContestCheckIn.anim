@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CloseContestIppon1As1
+  m_Name: CloseContestCheckIn
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,9 +20,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: b08463c71cb914f42ab85df1cad19bf0, type: 3}
+      value: {fileID: 21300000, guid: 2f887f82d56ab5e479d5bf1500fead46, type: 3}
     - time: 1
-      value: {fileID: 21300000, guid: b08463c71cb914f42ab85df1cad19bf0, type: 3}
+      value: {fileID: 21300000, guid: 2490f0aaaa8d7e147b6815189d373097, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -42,14 +42,14 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: b08463c71cb914f42ab85df1cad19bf0, type: 3}
-    - {fileID: 21300000, guid: b08463c71cb914f42ab85df1cad19bf0, type: 3}
+    - {fileID: 21300000, guid: 2f887f82d56ab5e479d5bf1500fead46, type: 3}
+    - {fileID: 21300000, guid: 2490f0aaaa8d7e147b6815189d373097, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.0833334
+    m_StopTime: 1.0166667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -68,18 +68,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 1
-    functionName: Slashed
-    data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 504242d325322bf4cb6462aa65d32922, type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 1.0833334
-    functionName: CheckoutCloseContest
-    data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 23b75f99664abb446b74e88ea0dbaae1, type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []
