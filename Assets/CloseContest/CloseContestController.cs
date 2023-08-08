@@ -105,7 +105,13 @@ public class CloseContestController : MonoBehaviour
     }
 
     //以下はアニメーションイベント用の関数
-    
+
+    //アニメーションイベントはアタッチしたスクリプトしか呼べない
+    //イベントを受け取り、間接的にPlayerGeneratorの関数を呼ぶ
+    public void CheckOut()
+    {
+        GameObject.Find("PlayerGenerator").GetComponent<PlayerGenerator>().CheckoutCloseContest();
+    }
     public void LeftHPDown()
     {
         //ダメージを反映
