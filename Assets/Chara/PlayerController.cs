@@ -534,6 +534,7 @@ public class PlayerController : MonoBehaviour
         this.myAnimator.SetBool("Ground", isGround);
     }
 
+    //アクションイベント用
     public void PreAttackStart()
     {
         //攻撃開始を知らせる（追加）

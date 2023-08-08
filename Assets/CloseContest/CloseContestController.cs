@@ -56,8 +56,13 @@ public class CloseContestController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    //===================================================================
-    //Addforce用=========================================================
+        //攻撃に使用するボタン（優先権があれば攻撃できるようにしたい）=======
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Attack1();
+        }
+
+        //Addforce用=========================================================
         // 左ボタンが押されたら
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -100,6 +105,7 @@ public class CloseContestController : MonoBehaviour
     }
 
     //以下はアニメーションイベント用の関数
+    
     public void LeftHPDown()
     {
         //ダメージを反映
@@ -125,6 +131,27 @@ public class CloseContestController : MonoBehaviour
     public void Footsteps()
     {
         GetComponent<AudioSource>().PlayOneShot(SE3Footsteps);
+    }
+    public void Attack1()
+    {
+        myAnimator.SetTrigger("Attack1");
+    }
+    //1を勝たせる
+    public void WinnerIsAssign1()
+    {
+        myAnimator.SetInteger("Assign", 1);
+    }
+    //1に対するガード
+
+    //2を勝たせる
+    public void WinnerIsAssign2()
+    {
+        myAnimator.SetInteger("Assign", 2);
+    }
+    //0に戻す
+    public void NoSide()
+    {
+        myAnimator.SetInteger("Assign", 0);
     }
     //実況（上の左右に何をやってるされているを代入するメソッドをつくる）
 }
