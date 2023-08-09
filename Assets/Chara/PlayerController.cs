@@ -222,7 +222,7 @@ public class PlayerController : MonoBehaviour
 
     //Idoling = 0, Advance, Wait, Approach, Back, Attack,  Guard ,Die};
 
-    void PlayerComuter()
+    void PlayerCOM()
     {
         //相手の距離
         float length = getLength(this.transform.position, otherPlayer.transform.position);
@@ -526,7 +526,7 @@ public class PlayerController : MonoBehaviour
         else if (assign == -2 || assign == -1)
         {
             //プレイヤー（COM)
-            PlayerComuter();
+            PlayerCOM();
         }
 
         //ジャンプの遷移
