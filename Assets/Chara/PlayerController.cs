@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
     private bool isEnd = false;
 
     //Comのガード率　１００で必ずガード　０でしない
-    public int guardRate;
+    //public int guardRate;
 
     //---------------------------------------------------
     //スタート
@@ -236,7 +236,7 @@ public class PlayerController : MonoBehaviour
                     myAnimator.SetInteger("Run", 0);
                     this.myRigidbody.velocity = new Vector2(0f, this.myRigidbody.velocity.y);
 
-                    //タイマー
+                    //タイマー(ぼーっとしてる　たとえば3秒ならのんびり0.5ならセカセカ）
                     if (timerCounter > 1.0f)
                     {
                         //次の行動を決める
@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour
                                 //攻撃が当たる、または相手の攻撃が当たる
 
                                 //相手が攻撃開始？
-                                if (isBeAttacked && Random.Range(0,100) <guardRate)
+                                if (isBeAttacked && Random.Range(0,100) < TitleController.guardRate)
                                 {
                                     //ガードの開始
                                     myAnimator.SetTrigger("Guard");
@@ -273,14 +273,14 @@ public class PlayerController : MonoBehaviour
                                 {
                                     //例えば相手のライフと自分のライフを比較
 
-                                    //がんがんいこうぜ = 7
-                                    //ふつう = 5
-                                    //いのちだいじに = 3
+                                    //がんがんいこうぜ = 70
+                                    //ふつう = 50
+                                    //いのちだいじに = 30
 
-                                    int random = 3;
+                                    int random = 30;
 
                                     //ランダム（30～70%）
-                                    if (Random.Range(1, 11) <= random)
+                                    if (Random.Range(0, 100) <= random)
                                     {
                                         //攻撃の開始
                                         myAnimator.SetTrigger("PreAttack");
@@ -305,14 +305,14 @@ public class PlayerController : MonoBehaviour
                             {
                                 //例えば相手のライフと自分のライフを比較
 
-                                //がんがんいこうぜ = 7
-                                //ふつう = 5
-                                //いのちだいじに = 3
+                                //がんがんいこうぜ = 70
+                                //ふつう = 50
+                                //いのちだいじに = 30
 
-                                int random = 3;
+                                int random = 30;
 
                                 //ランダム（30～70%）
-                                if (Random.Range(1, 11) <= random)
+                                if (Random.Range(0, 100) < random)
                                 {
                                     //クリアー
                                     timerCounter = 0.0f;
@@ -333,11 +333,11 @@ public class PlayerController : MonoBehaviour
                     }
                     else 
                     {
-                        //n秒ボートしてる
+                        //攻撃が来るのを構えている
                         if (length < 2.0f)
                         {
                             //相手が攻撃開始？
-                            if (isBeAttacked && Random.Range(0, 100) < guardRate)
+                            if (isBeAttacked && Random.Range(0, 100) < TitleController.guardRate)
                             {
                                 //ガードの開始
                                 myAnimator.SetTrigger("Guard");

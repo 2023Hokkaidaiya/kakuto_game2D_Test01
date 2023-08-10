@@ -21,7 +21,8 @@ public class HPManager : MonoBehaviour
     //•]‰¿ƒ|ƒCƒ“ƒgŒvZ—p
     public int EvPLeft; //1
     public int EvPRight; //2
-    public int EvP; //·Šz‚P|‚Q
+    //ƒ}ƒCƒiƒX‚Å1‚ª—L—˜@2‚ª—L—˜
+    public int EvP = 0; //·Šz‚P|‚Q
 
     // Start is called before the first frame update
     void Start()

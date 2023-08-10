@@ -43,9 +43,9 @@ public class PlayerGenerator : MonoBehaviour
         //assignの再設定も可能 ※左:1 右:2 / COM 左：-1 右：-2
         Player1.GetComponent<PlayerController>().assign = 1;
         Player2.GetComponent<PlayerController>().assign = -2;
-        //敵のガード率
-        Player1.GetComponent<PlayerController>().guardRate = 5;
-        Player2.GetComponent<PlayerController>().guardRate = 5;
+        //敵のガード率（TitleControllerに移動したので廃止）
+        //Player1.GetComponent<PlayerController>().guardRate = 5;
+        //Player2.GetComponent<PlayerController>().guardRate = 5;
     }
 
     // Update is called once per frame
@@ -148,9 +148,9 @@ public class PlayerGenerator : MonoBehaviour
         //assignの再設定も可能 ※左:1 右:2 / COM 左：-1 右：-2
         Player1.GetComponent<PlayerController>().assign = 1;
         Player2.GetComponent<PlayerController>().assign = -2;
-        //敵のガード率
-        Player1.GetComponent<PlayerController>().guardRate = 5;
-        Player2.GetComponent<PlayerController>().guardRate = 5;
+        ////敵のガード率
+        //Player1.GetComponent<PlayerController>().guardRate = 5;
+        //Player2.GetComponent<PlayerController>().guardRate = 5;
     }
     //アサイン1を戻す
     //アサイン2の入れ替え

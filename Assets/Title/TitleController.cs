@@ -13,6 +13,7 @@ public class TitleController : MonoBehaviour
     public Slider sliderObject1; // sliderObject1•Ï”‚ğ’è‹`
     public Slider sliderObject2; // sliderObject2•Ï”‚ğ’è‹`
 
+    static public int  guardRate;
 
     // Start is called before the first frame update
     void Start()
