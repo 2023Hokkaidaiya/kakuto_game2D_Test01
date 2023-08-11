@@ -14,7 +14,7 @@ public class CloseContestController : MonoBehaviour
     //着地できるレイヤー
     //public LayerMask groundLayer;
     //移動可能
-    private bool isRun = true;
+    //private bool isRun = true;
     //HPマネージャー
     //private GameObject hpManager;
     private HPManager hpManager;
@@ -29,8 +29,8 @@ public class CloseContestController : MonoBehaviour
 
     //addforce用の変数
     public float moveForce = 10f;　//これをつど0にしたり10にしたりする
-    private bool isMovingLeft = false;
-    private bool isMovingRight = false;
+    //private bool isMovingLeft = false;
+    //private bool isMovingRight = false;
 
     //SoundEffect
     public AudioClip SE1Slashed; //ザシュッっとした音
@@ -141,7 +141,7 @@ public class CloseContestController : MonoBehaviour
                             myAnimator.SetBool("Guard", false);
 
                             //Player1が仕掛ける
-                            myAnimator.SetTrigger("Attack1");
+                            myAnimator.SetTrigger("Attack1AS1");
 
                             //状態の遷移
                             stateNumber = 1;
@@ -161,7 +161,7 @@ public class CloseContestController : MonoBehaviour
                                 myAnimator.SetBool("Guard", false);
 
                                 //Player2が仕掛ける
-                                myAnimator.SetTrigger("Attack2");
+                                myAnimator.SetTrigger("Attack1AS2");
 
                                 //状態の遷移
                                 stateNumber = 2;
