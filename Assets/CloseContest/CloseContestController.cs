@@ -130,7 +130,7 @@ public class CloseContestController : MonoBehaviour
                     //0ならどちらが仕掛けても良い
                     if (hpManager.EvP == 0)
                     {
-                        //Player1の処理
+                        //Player1の処理(A押下で攻撃する）
                         if (Input.GetKeyDown(KeyCode.A))
                         {
                             //クリアー
@@ -147,13 +147,13 @@ public class CloseContestController : MonoBehaviour
                             stateNumber = 1;
                         }
 
-                        //Player2の処理
+                        //Player2の処理（1秒経過後、ランダムでPlayer2が動き始める、10％としているが大きくするとより攻撃的になります）
                         if (timerCounter > 1.0f) 
                         {
                             //クリアー
                             timerCounter = 0.0f;
 
-                            //ランダム 仮に10%
+                            //ランダム 仮に10%（10は変数候補）
                             if (Random.Range(0, 100) < 10)
                             {
                                 //フラグクリア
@@ -168,7 +168,7 @@ public class CloseContestController : MonoBehaviour
                             }
                         }
                     }
-                    //Player1が有利
+                    //Player1が有利ならPlayer1のみが仕掛けることができる
                     else if (hpManager.EvP < 0)
                     {
                         //Player1の処理
@@ -188,7 +188,7 @@ public class CloseContestController : MonoBehaviour
                             stateNumber = 1;
                         }
                     }
-                    //Player2が有利
+                    //Player2が有利ならPlayer2のみが仕掛けることができる
                     else if (hpManager.EvP > 0)
                     {
                         //Player2の処理
@@ -197,7 +197,7 @@ public class CloseContestController : MonoBehaviour
                             //クリアー
                             timerCounter = 0.0f;
 
-                            //ランダム 仮に10%
+                            //ランダム 仮に10%（10は変数候補）
                             if (Random.Range(0, 100) < 10)
                             {
                                 //フラグクリア
@@ -219,7 +219,7 @@ public class CloseContestController : MonoBehaviour
             case 1:
                 {
                     //Player2の処理
-                    if (timerCounter > 0.8f)
+                    if (timerCounter > 0.8f)　//Player1が攻撃を仕掛けてから0.8秒以上（変数候補）が経過したときに成り立ちます。
                     {
                         //ガード失敗
                         myAnimator.SetBool("Ippon", true);
@@ -234,7 +234,7 @@ public class CloseContestController : MonoBehaviour
                     else
                     {
                         //ランダム 仮に5%
-                        if (Random.Range(0, 100) < 5)
+                        if (Random.Range(0, 100) < 5)　//Player1が攻撃を仕掛けてから0.8秒（変数候補）が経過するまでガードの判定
                         {
                             myAnimator.SetBool("Guard", true);
                             myAnimator.SetInteger("Assign", 2);
@@ -303,7 +303,7 @@ public class CloseContestController : MonoBehaviour
             //一本 Player1が勝った
             case -1:
                 {
-                    if (timerCounter > 0.5f)
+                    if (timerCounter > 1.0f)
                     {
                         //ダメージを反映
                         hpManager.HPRight -= CloseContestDamage * TitleController.assign1Attack;
@@ -320,7 +320,7 @@ public class CloseContestController : MonoBehaviour
             //一本 Player2が勝った
             case -2:
                 {
-                    if (timerCounter > 0.5f)
+                    if (timerCounter > 1.0f)
                     {
                         //ダメージを反映
                         hpManager.HPLeft -= CloseContestDamage * TitleController.assign2Attack;
