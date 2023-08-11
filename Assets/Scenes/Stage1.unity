@@ -543,8 +543,8 @@ RectTransform:
   - {fileID: 1054776729}
   - {fileID: 662803122}
   - {fileID: 1809039271}
-  - {fileID: 1660982858}
   - {fileID: 1417629205}
+  - {fileID: 1660982858}
   - {fileID: 285540660}
   m_Father: {fileID: 0}
   m_RootOrder: 8
@@ -972,7 +972,7 @@ GameObject:
   - component: {fileID: 1417629207}
   - component: {fileID: 1417629206}
   m_Layer: 5
-  m_Name: LeftEvP
+  m_Name: Stand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -985,12 +985,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417629204}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 782194572}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1030,7 +1030,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LeftEvP
+  m_Text: Stand
 --- !u!222 &1417629207
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1178,7 +1178,7 @@ GameObject:
   - component: {fileID: 1660982860}
   - component: {fileID: 1660982859}
   m_Layer: 5
-  m_Name: RightEvP
+  m_Name: Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1196,7 +1196,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 782194572}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1236,7 +1236,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RightEvP
+  m_Text: Close
 --- !u!222 &1660982860
 CanvasRenderer:
   m_ObjectHideFlags: 0
