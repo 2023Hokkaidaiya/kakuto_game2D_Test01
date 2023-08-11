@@ -6,24 +6,34 @@ using UnityEngine.UI;
 
 public class HPManager : MonoBehaviour
 {
+ //================================================
     //左上のHPテキスト
     private GameObject hpleftText;
-    //右上のテキスト
+    //右上のHPテキスト
     private GameObject hprightText;
     //HP player1 player2計算用変数
     public int HPLeft;  //1
     public int HPRight; //2
-
+//=================================================
     //評価用のポイント（一枚絵の分岐などに使う）
-    private GameObject leftEvP;
-    private GameObject rightEvP;
-    private GameObject evP;
-    //評価ポイント計算用
-    public int EvPLeft; //1
-    public int EvPRight; //2
+    //private GameObject leftEvP;
+    //private GameObject rightEvP;
+    private GameObject evPText;
+
+    //評価ポイント計算用変数
+    //public int EvPLeft; //1
+    //public int EvPRight; //2
     //マイナスで1が有利　2が有利
     public int EvP = 0; //差額１－２
-
+//=================================================
+    //左上のStandテキスト
+    private GameObject stleftText;
+    //右上のStandテキスト
+    private GameObject strightText;
+    //Stand計算用変数
+    public int STLeft;
+    public int STRight;
+//=================================================
     // Start is called before the first frame update
     void Start()
     {
@@ -33,15 +43,18 @@ public class HPManager : MonoBehaviour
         this.hpleftText = GameObject.Find("HP_player1");
         this.hprightText = GameObject.Find("HP_player2");
         //シーン中のEvPオブジェクト取得
-        this.leftEvP = GameObject.Find("LeftEvP");
-        this.rightEvP = GameObject.Find("RightEvP");
-        this.evP = GameObject.Find("EvP");
+        //this.leftEvP = GameObject.Find("LeftEvP");
+        //this.rightEvP = GameObject.Find("RightEvP");
+        this.evPText = GameObject.Find("EvP");
+        //シーン中のSTTextオブジェクトを取得
+        this.stleftText = GameObject.Find("ST_player1");
+        this.strightText = GameObject.Find("ST_player2");
     }
 
     // Update is called once per frame
     void Update()
     {
-        //HPを更新する
+        //HPを更新する=====================================================================
         if(HPLeft <= 0)
         {
             this.hpleftText.GetComponent<Text>().text = "HP:0";
@@ -60,10 +73,14 @@ public class HPManager : MonoBehaviour
             this.hprightText.GetComponent<Text>().text = "HP:" + HPRight.ToString();
         }
 
-        //EvPを更新する
-        this.leftEvP.GetComponent<Text>().text = "EvP:" + EvPLeft.ToString();
-        this.rightEvP.GetComponent<Text>().text = "EvP:" + EvPRight.ToString();
-        this.evP.GetComponent<Text>().text = EvP.ToString();
+        //EvPを更新する(変数はEvP）========================================================
+        //this.leftEvP.GetComponent<Text>().text = "EvP:" + EvPLeft.ToString();
+        //this.rightEvP.GetComponent<Text>().text = "EvP:" + EvPRight.ToString();
+        this.evPText.GetComponent<Text>().text = EvP.ToString();
 
+        //Standを更新する(変数はSTLeft STRight)============================================
+        this.stleftText.GetComponent<Text>().text = STLeft.ToString();
+        this.strightText.GetComponent<Text>().text = STRight.ToString();
+        //=================================================================================
     }
 }

@@ -130,8 +130,8 @@ public class CloseContestController : MonoBehaviour
                     //0ならどちらが仕掛けても良い
                     if (hpManager.EvP == 0)
                     {
-                        //Player1の処理(A押下で攻撃する）
-                        if (Input.GetKeyDown(KeyCode.A))
+                        //Player1の処理(Z押下で攻撃する）
+                        if (Input.GetKeyDown(KeyCode.Z))
                         {
                             //クリアー
                             timerCounter = 0.0f;
@@ -172,7 +172,7 @@ public class CloseContestController : MonoBehaviour
                     else if (hpManager.EvP < 0)
                     {
                         //Player1の処理
-                        if (Input.GetKeyDown(KeyCode.A))
+                        if (Input.GetKeyDown(KeyCode.Z))
                         {
                             //クリアー
                             timerCounter = 0.0f;
@@ -271,7 +271,7 @@ public class CloseContestController : MonoBehaviour
                     else
                     {
                         //ガードキー
-                        if (Input.GetKeyDown(KeyCode.S))
+                        if (Input.GetKeyDown(KeyCode.X))
                         {
                             myAnimator.SetBool("Guard", true);
                             myAnimator.SetInteger("Assign", 1);
