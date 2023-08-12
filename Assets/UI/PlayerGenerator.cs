@@ -22,6 +22,10 @@ public class PlayerGenerator : MonoBehaviour
     //一枚絵Prefabを入れる
     public GameObject CloseContestPrefab;
     private GameObject CloseContest;
+
+    public GameObject CloseContest2Prefab;
+    private GameObject CloseContest2;
+
     //HPmanager
     private GameObject hpManager;
 
@@ -51,6 +55,7 @@ public class PlayerGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //デバッグ用（最終的にはコメントアウト)=========================================
         //1で必殺技に変える
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -71,10 +76,22 @@ public class PlayerGenerator : MonoBehaviour
         {
             CheckoutCloseContest();
         }
-        
+        //8で一枚絵１→一枚絵２に変える
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            ChangeCloseContest();
+        }
+        //============================================================================
+
 
         //もしSTが1になったら必殺技に変える
-        //もし
+        //もしCloseが1になったらつばぜり合い
+        if (hpManager.GetComponent<HPManager>().Close == 1)
+        {
+            hpManager.GetComponent<HPManager>().Close = 0;
+
+            CheckinCloseContest();
+        }
      
     }
 
@@ -125,6 +142,7 @@ public class PlayerGenerator : MonoBehaviour
         Vector3 positionLeft = Player1.transform.position;
         Vector3 positionRight = Player2.transform.position;
         Vector3 positionMiddle = (positionLeft + positionRight) / 2f;
+        
         //ポジションが取得できたの破棄
         Destroy(Player1.gameObject, 0.0f);
         Destroy(Player2.gameObject, 0.0f);
@@ -160,10 +178,11 @@ public class PlayerGenerator : MonoBehaviour
     public void ChangeCloseContest() //絵から一が上に変更
     {
         //入れ替え直前のポジションを取得
-        Vector3 positionMiddle = CloseContest.transform.position;
+        Vector3 positionClose = CloseContest.transform.position;
         //ポジションが取得できたの破棄
         Destroy(CloseContest.gameObject, 0.0f);
-        //
+        //つばぜり合い2を生成
+        CloseContest2 = Instantiate(CloseContestPrefab, positionClose, Quaternion.identity);
     }
 
         //アサイン1を戻す

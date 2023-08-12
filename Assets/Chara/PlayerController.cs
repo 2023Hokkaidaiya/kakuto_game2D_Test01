@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour
 
     //汎用タイマー
     private float timerCounter;
+    //間欠タイマー
+    private float intervalCounter;
 
     //debagテキスト
     private GameObject stateText;
@@ -333,26 +335,36 @@ public class PlayerController : MonoBehaviour
                     }
                     else 
                     {
-                        //攻撃が来るのを構えている
-                        if (length < 2.0f)
+
+                        //間欠タイマー10/5＝２回来る（アイドリングが1秒なので）
+                        if (intervalCounter > 0.5f)
                         {
-                            //相手が攻撃開始？
-                            if (isBeAttacked && Random.Range(0, 100) < TitleController.guardRate)
-                            {
-                                //ガードの開始
-                                myAnimator.SetTrigger("Guard");
+                            //クリア
+                            intervalCounter = 0.0f;
 
-                                //クリアー
-                                timerCounter = 0.0f;
-
-                                //遷移
-                                stateNumber = (int)states.Guard;
-                            }
-                            else
+                            //攻撃が来るのを構えている
+                            if (length < 2.0f)
                             {
-                                Debug.Log("ガードキャンセル");
+                                //相手が攻撃開始？
+                                if (isBeAttacked && Random.Range(0, 100) < TitleController.guardRate)
+                                {
+                                    //ガードの開始
+                                    myAnimator.SetTrigger("Guard");
+
+                                    //クリアー
+                                    timerCounter = 0.0f;
+
+                                    //遷移
+                                    stateNumber = (int)states.Guard;
+                                }
+                                else
+                                {
+                                    Debug.Log("ガードキャンセル");
+                                }
                             }
+
                         }
+                  
                     }
 
                 }
@@ -518,6 +530,9 @@ public class PlayerController : MonoBehaviour
     //＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
     void Update()
     {
+        //間欠タイマー
+        intervalCounter += Time.deltaTime;
+
         if (assign == 1 || assign == 2)
         {
             //プレイヤー
@@ -618,19 +633,19 @@ public class PlayerController : MonoBehaviour
         GetComponent<AudioSource>().PlayOneShot(SE3Footsteps);
     }
 
-    /*
-    private void FixedUpdate()
-    {
-        //地上判定
-        isGround = Physics2D.Linecast(transform.position, transform.position - (transform.up * 0.1f), groundLayer);
-        if(isGround || axisH != 0)
-        {
-            //地面上OR速度が０ではない
-            //速度を更新する
-            rbody.velocity = new Vector2(VELOCITY * axisH,rbody.velocity.y);
-        }
-    }
-    */
+    ///*
+    //private void FixedUpdate()
+    //{
+    //    //地上判定
+    //    isGround = Physics2D.Linecast(transform.position, transform.position - (transform.up * 0.1f), groundLayer);
+    //    if(isGround || axisH != 0)
+    //    {
+    //        //地面上OR速度が０ではない
+    //        //速度を更新する
+    //        rbody.velocity = new Vector2(VELOCITY * axisH,rbody.velocity.y);
+    //    }
+    //}
+    //*/
 
 
     //
@@ -729,6 +744,12 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Ground")
         {
             isGround = true;
+        }
+
+        if (other.gameObject.tag == "Player")
+        {
+            //Debug.Log("接触：　"+Time.time +"/"+ other.gameObject.name);
+            hpManager.GetComponent<HPManager>().Close = 1;
         }
     }
 

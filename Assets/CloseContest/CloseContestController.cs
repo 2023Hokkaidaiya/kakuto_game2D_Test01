@@ -24,6 +24,8 @@ public class CloseContestController : MonoBehaviour
     private int stateNumber = 0;
     //汎用タイマー
     private float timerCounter;
+    //間欠タイマー
+    private float intervalCounter;
     //debagテキスト（実況テキスト）
     //public GameObject stateText;
 
@@ -107,7 +109,9 @@ public class CloseContestController : MonoBehaviour
         //}
         //===================================================
 
-
+        //間欠タイマー
+        intervalCounter += Time.deltaTime;
+        //汎用タイマー
         timerCounter += Time.deltaTime;
 
         //状態
@@ -233,22 +237,34 @@ public class CloseContestController : MonoBehaviour
                     }
                     else
                     {
-                        //ランダム 仮に5%（0.8fの間、5（変数候補）以下が出ればこちらに移行する）guardRateAS2 初期値は3に設定
-                        if (Random.Range(0, 100) < TitleController.guardRateAS2)　//Player1が攻撃を仕掛けてから0.8秒（変数候補）が経過するまでガードの判定
+                        Debug.Log("仕掛けられている"+Time.time);
+
+                        //8/4で２回できる
+                        if(intervalCounter > 0.4f)
                         {
-                            //myAnimator.SetBool("Guard", true);　//guard廃止
-                            myAnimator.SetBool("Ippon", false);
-                            //myAnimator.SetInteger("Assign", 2);　//アサインも廃止
+                            //クリア
+                            intervalCounter = 0.0f;
 
-                            //Player2が有利になる
-                            hpManager.EvP++;
+                            //ランダム 仮に5%（0.8fの間、5（変数候補）以下が出ればこちらに移行する）guardRateAS2 初期値は3に設定
+                            if (Random.Range(0, 100) < TitleController.guardRateAS2) //Player1が攻撃を仕掛けてから0.8秒（変数候補）が経過するまでガードの判定
+                            {
 
-                            //クリアー
-                            timerCounter = 0.0f;
+                                //myAnimator.SetBool("Guard", true);　//guard廃止
+                                myAnimator.SetBool("Ippon", false);
+                                //myAnimator.SetInteger("Assign", 2);　//アサインも廃止
 
-                            //状態の遷移
-                            stateNumber = 3;
+                                //Player2が有利になる
+                                hpManager.EvP++;
+
+                                //クリアー
+                                timerCounter = 0.0f;
+
+                                //状態の遷移
+                                stateNumber = 3;
+                            }
+
                         }
+                    
                     }
                 }
                 break;

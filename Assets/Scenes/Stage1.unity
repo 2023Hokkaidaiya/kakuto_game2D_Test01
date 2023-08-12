@@ -1074,6 +1074,7 @@ MonoBehaviour:
   Player1DeathBrowPrefab: {fileID: 7946381793721884286, guid: 1f5f08b1bc3e7814ca91935a4a9ab667, type: 3}
   Player2DeathBrowPrefab: {fileID: 8234326293934382125, guid: c9af8204b36edce4b81a9f1063cc85bf, type: 3}
   CloseContestPrefab: {fileID: 166091574685721655, guid: 8b7fbfbbb193a8941bcbfe5d15206c6c, type: 3}
+  CloseContest2Prefab: {fileID: 166091574685721655, guid: fd670e55e99a1ea4a9fc7ac59f790b0e, type: 3}
 --- !u!4 &1457005178
 Transform:
   m_ObjectHideFlags: 0
@@ -1418,6 +1419,7 @@ MonoBehaviour:
   HPLeft: 10
   HPRight: 10
   EvP: 0
+  Close: 0
   STLeft: 0
   STRight: 0
 --- !u!4 &1862901160
