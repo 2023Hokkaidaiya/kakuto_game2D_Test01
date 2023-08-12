@@ -261,7 +261,7 @@ public class CloseContestController : MonoBehaviour
                     {
                         //ガード失敗
                         myAnimator.SetBool("Ippon", true);
-                        myAnimator.SetInteger("Assign", 2);
+                        //myAnimator.SetInteger("Assign", 2);
 
                         //クリアー
                         timerCounter = 0.0f;
@@ -276,7 +276,7 @@ public class CloseContestController : MonoBehaviour
                         {
                             //myAnimator.SetBool("Guard", true); //guard廃止したのでIpponをフォルスにする
                             myAnimator.SetBool("Ippon", false);
-                            myAnimator.SetInteger("Assign", 1);
+                            //myAnimator.SetInteger("Assign", 1);
 
                             //Player1が有利になる
                             hpManager.EvP--;
@@ -352,10 +352,10 @@ public class CloseContestController : MonoBehaviour
 
     //アニメーションイベントはアタッチしたスクリプトしか呼べない
     //イベントを受け取り、間接的にPlayerGeneratorの関数を呼ぶ
-    public void CheckOut()
-    {
-        GameObject.Find("PlayerGenerator").GetComponent<PlayerGenerator>().CheckoutCloseContest();
-    }
+    //public void CheckOut()
+    //{
+    //    GameObject.Find("PlayerGenerator").GetComponent<PlayerGenerator>().CheckoutCloseContest();
+    //}
     //public void LeftHPDown()
     //{
     //    //ダメージを反映
