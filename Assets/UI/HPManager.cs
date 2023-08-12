@@ -25,7 +25,12 @@ public class HPManager : MonoBehaviour
     //public int EvPRight; //2
     //マイナスで1が有利　2が有利
     public int EvP = 0; //差額１－２
-//=================================================
+
+
+    //CLテキスト
+    private GameObject closeText;
+    public int Close = 0;
+    //=================================================
     //左上のStandテキスト
     private GameObject stleftText;
     //右上のStandテキスト
@@ -42,6 +47,8 @@ public class HPManager : MonoBehaviour
         //シーン中のHPTextオブジェクトを取得
         this.hpleftText = GameObject.Find("HP_player1");
         this.hprightText = GameObject.Find("HP_player2");
+        //シーン中のCloseオブジェクト取得
+        this.closeText = GameObject.Find("Close");
         //シーン中のEvPオブジェクト取得
         //this.leftEvP = GameObject.Find("LeftEvP");
         //this.rightEvP = GameObject.Find("RightEvP");
@@ -78,6 +85,8 @@ public class HPManager : MonoBehaviour
         //this.rightEvP.GetComponent<Text>().text = "EvP:" + EvPRight.ToString();
         this.evPText.GetComponent<Text>().text = EvP.ToString();
 
+        //Closeを更新する==================================================================
+        this.closeText.GetComponent<Text>().text = Close.ToString();
         //Standを更新する(変数はSTLeft STRight)============================================
         this.stleftText.GetComponent<Text>().text = STLeft.ToString();
         this.strightText.GetComponent<Text>().text = STRight.ToString();

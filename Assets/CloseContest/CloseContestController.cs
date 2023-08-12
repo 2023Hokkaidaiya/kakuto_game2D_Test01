@@ -153,8 +153,8 @@ public class CloseContestController : MonoBehaviour
                             //クリアー
                             timerCounter = 0.0f;
 
-                            //ランダム 仮に10%（10は変数候補）10→aggression5050AS2
-                            if (Random.Range(0, 100) < 10)
+                            //ランダム 仮に10%（10は変数候補）10→aggression5050AS2　初期値は10とした
+                            if (Random.Range(0, 100) < TitleController.aggression5050AS2)
                             {
                                 //フラグクリア
                                 myAnimator.SetBool("Ippon", false);
@@ -198,7 +198,7 @@ public class CloseContestController : MonoBehaviour
                             timerCounter = 0.0f;
 
                             //ランダム 仮に10%（10は変数候補）10→aggression5050AS2
-                            if (Random.Range(0, 100) < 10)
+                            if (Random.Range(0, 100) < TitleController.aggression5050AS2)
                             {
                                 //フラグクリア
                                 myAnimator.SetBool("Ippon", false);
@@ -233,8 +233,8 @@ public class CloseContestController : MonoBehaviour
                     }
                     else
                     {
-                        //ランダム 仮に5%（0.8fの間、5（変数候補）以下が出ればこちらに移行する）guardRateAS2
-                        if (Random.Range(0, 100) < 5)　//Player1が攻撃を仕掛けてから0.8秒（変数候補）が経過するまでガードの判定
+                        //ランダム 仮に5%（0.8fの間、5（変数候補）以下が出ればこちらに移行する）guardRateAS2 初期値は3に設定
+                        if (Random.Range(0, 100) < TitleController.guardRateAS2)　//Player1が攻撃を仕掛けてから0.8秒（変数候補）が経過するまでガードの判定
                         {
                             //myAnimator.SetBool("Guard", true);　//guard廃止
                             myAnimator.SetBool("Ippon", false);
@@ -256,7 +256,7 @@ public class CloseContestController : MonoBehaviour
             //Player2が仕掛けた
             case 2:
                 {
-                    //Player1の処理
+                    //Player1の処理（変数ではないが0.8fは技によって調整する必要がある
                     if (timerCounter > 0.8f)
                     {
                         //ガード失敗
@@ -339,7 +339,7 @@ public class CloseContestController : MonoBehaviour
             //戻る
             case 9:
                 {
-                    if (timerCounter > 1.09f) //CheckOutする
+                    if (timerCounter > 1.09f) //CheckOutする PlayerGeneratorのCheckoutCloseContest()を使う。
                     {
                         GameObject.Find("PlayerGenerator").GetComponent<PlayerGenerator>().CheckoutCloseContest();
                     }

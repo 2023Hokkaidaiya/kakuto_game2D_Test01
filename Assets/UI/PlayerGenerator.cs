@@ -72,6 +72,9 @@ public class PlayerGenerator : MonoBehaviour
             CheckoutCloseContest();
         }
         
+
+        //もしSTが1になったら必殺技に変える
+        //もし
      
     }
 
@@ -79,7 +82,7 @@ public class PlayerGenerator : MonoBehaviour
 
 
 
-    //アサイン1の入れ替え(数値の１を押下するとPlayer1→Player1DeathBrow）
+    //アサイン1の入れ替え(数値の１を押下するとPlayer1→Player1DeathBrow）Player1に代入されるものをPlayer1DeathBrowに変更　必要になったら足す
     public void ChangePlayer1toPlayerDeathBrow()
     {
         //入れ替え直前のポジションを取得(Leftを入れ変える)
@@ -129,6 +132,7 @@ public class PlayerGenerator : MonoBehaviour
         CloseContest = Instantiate(CloseContestPrefab, positionMiddle, Quaternion.identity);
 
     }
+
     public void CheckoutCloseContest()
     {
         //入れ替え直前のポジションを取得
@@ -152,10 +156,19 @@ public class PlayerGenerator : MonoBehaviour
         //Player1.GetComponent<PlayerController>().guardRate = 5;
         //Player2.GetComponent<PlayerController>().guardRate = 5;
     }
-    //アサイン1を戻す
-    //アサイン2の入れ替え
-    //アサイン2を戻す
 
-    //HP0になったらImpossibleに入れ替える
+    public void ChangeCloseContest() //絵から一が上に変更
+    {
+        //入れ替え直前のポジションを取得
+        Vector3 positionMiddle = CloseContest.transform.position;
+        //ポジションが取得できたの破棄
+        Destroy(CloseContest.gameObject, 0.0f);
+        //
+    }
 
-}
+        //アサイン1を戻す
+        //アサイン2の入れ替え
+        //アサイン2を戻す
+        //HP0になったらImpossibleに入れ替える（廃止）
+
+    }

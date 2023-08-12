@@ -12,19 +12,21 @@ public class TitleController : MonoBehaviour
     public string sceneName; //読み込むシーン名
     public Slider sliderObject1; // sliderObject1変数を定義
     public Slider sliderObject2; // sliderObject2変数を定義
-
-    static public int  guardRate;
+    
+    //立ち用の変数========================================================
+    static public int  guardRate = 2;   //低くすることで攻撃が通りやすくなる→攻撃能力が向上
 
     //CloseContest用の変数================================================
     //5050の時のAS2の攻撃頻度　高くすることでよりアグレッシブになる
-    static public int aggression5050AS2;
-    //Player1優勢の際のguard率（低くすることで攻撃が通りやすくなる→攻撃能力が向上）
-    static public int guardRateAS2;
+    static public int aggression5050AS2 = 10;
+    //Player1優勢の際のguard率（低くすることで攻撃が通りやすくなる→攻撃能力が向上　　攻撃の種類だけ増やすこともできる）
+    static public int guardRateAS2 = 3;
     //====================================================================
 
     // Start is called before the first frame update
     void Start()
     {
+        
         
     }
 

@@ -27,14 +27,14 @@ public class PlayerController : MonoBehaviour
     private bool isGround = false;
 
     //着地できるレイヤー
-    //public LayerMask groundLayer;
+    //public LayerMask groundLayer;　//ジャンプしないので廃止
 
     //移動可能
     private bool isRun = true;
 
     //攻撃オブジェクト(必要に応じて追加）
     private GameObject attackObject;
-    //攻撃オブジェクト２（DeathBrow）
+    //攻撃オブジェクト２（DeathBrow）　1キャラ1技としたため廃止した
     //private GameObject deathbrowObject;
 
     //プレイヤーか敵か　左：「１」　右：２　、COM　左：-1、右：「－2」
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
     //攻撃のPrefab
     public GameObject attackPrefab;
-    //public GameObject deathbrowPrefab;
+    //public GameObject deathbrowPrefab;　1キャラ1技としたため廃止した
 
     //HPマネージャー
     private GameObject hpManager;
@@ -657,7 +657,7 @@ public class PlayerController : MonoBehaviour
 
                     //ダメージを反映
                     hpManager.GetComponent<HPManager>().HPLeft -= TitleController.assign2Attack;
-
+                                        
                     //LifeCheckして
                     if (hpManager.GetComponent<HPManager>().HPLeft <= 0)
                     {
@@ -666,6 +666,9 @@ public class PlayerController : MonoBehaviour
                         //終了
                         isEnd = true;
                     }
+
+                    //EvPを1（定数）にする Player1がつばぜり合いで不利になる
+                    hpManager.GetComponent<HPManager>().EvP = 1;
                 }
                 else
                 {
@@ -705,6 +708,8 @@ public class PlayerController : MonoBehaviour
                         //終了
                         stateNumber = (int)states.Die;
                     }
+                    //EvPを-1（定数）にする Player1がつばぜり合いで有利になる
+                    hpManager.GetComponent<HPManager>().EvP = -1;
 
                 }
                 else
