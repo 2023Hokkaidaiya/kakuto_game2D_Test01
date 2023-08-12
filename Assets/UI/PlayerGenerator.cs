@@ -178,11 +178,11 @@ public class PlayerGenerator : MonoBehaviour
     public void ChangeCloseContest() //絵から一が上に変更
     {
         //入れ替え直前のポジションを取得
-        Vector3 positionClose = CloseContest.transform.position;
+        Vector3 positionMiddle = CloseContest.transform.position;
         //ポジションが取得できたの破棄
         Destroy(CloseContest.gameObject, 0.0f);
         //つばぜり合い2を生成
-        CloseContest2 = Instantiate(CloseContestPrefab, positionClose, Quaternion.identity);
+        CloseContest2 = Instantiate(CloseContestPrefab, positionMiddle, Quaternion.identity);
     }
 
         //アサイン1を戻す
