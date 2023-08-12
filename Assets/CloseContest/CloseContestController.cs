@@ -239,8 +239,8 @@ public class CloseContestController : MonoBehaviour
                     {
                         Debug.Log("dŠ|‚¯‚ç‚ê‚Ä‚¢‚é"+Time.time);
 
-                        //8/4‚Å‚Q‰ñ‚Å‚«‚é
-                        if(intervalCounter > 0.4f)
+                        //8/4‚Å‚Q‰ñ‚Å‚«‚é(0.8/0.4‚Å2‰ñ‚Ì‚Í‚¸‚¾‚ªãè‚­‚¢‚©‚¸0.3‚É‚µ‚Ä‚İ‚éj
+                        if(intervalCounter > 0.3f)
                         {
                             //ƒNƒŠƒA
                             intervalCounter = 0.0f;

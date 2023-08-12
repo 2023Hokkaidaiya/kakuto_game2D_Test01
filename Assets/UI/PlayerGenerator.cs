@@ -182,7 +182,7 @@ public class PlayerGenerator : MonoBehaviour
         //ポジションが取得できたの破棄
         Destroy(CloseContest.gameObject, 0.0f);
         //つばぜり合い2を生成
-        CloseContest2 = Instantiate(CloseContestPrefab, positionMiddle, Quaternion.identity);
+        CloseContest2 = Instantiate(CloseContest2Prefab, positionMiddle, Quaternion.identity);
     }
 
         //アサイン1を戻す
