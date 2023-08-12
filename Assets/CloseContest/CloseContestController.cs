@@ -153,7 +153,7 @@ public class CloseContestController : MonoBehaviour
                             //クリアー
                             timerCounter = 0.0f;
 
-                            //ランダム 仮に10%（10は変数候補）
+                            //ランダム 仮に10%（10は変数候補）10→aggression5050AS2
                             if (Random.Range(0, 100) < 10)
                             {
                                 //フラグクリア
@@ -197,7 +197,7 @@ public class CloseContestController : MonoBehaviour
                             //クリアー
                             timerCounter = 0.0f;
 
-                            //ランダム 仮に10%（10は変数候補）
+                            //ランダム 仮に10%（10は変数候補）10→aggression5050AS2
                             if (Random.Range(0, 100) < 10)
                             {
                                 //フラグクリア
@@ -215,7 +215,7 @@ public class CloseContestController : MonoBehaviour
                 }
                 break;
 
-            //Player1が仕掛ける
+            //Player1が仕掛けた
             case 1:
                 {
                     //Player2の処理
@@ -233,7 +233,7 @@ public class CloseContestController : MonoBehaviour
                     }
                     else
                     {
-                        //ランダム 仮に5%
+                        //ランダム 仮に5%（0.8fの間、5（変数候補）以下が出ればこちらに移行する）guardRateAS2
                         if (Random.Range(0, 100) < 5)　//Player1が攻撃を仕掛けてから0.8秒（変数候補）が経過するまでガードの判定
                         {
                             //myAnimator.SetBool("Guard", true);　//guard廃止
@@ -253,7 +253,7 @@ public class CloseContestController : MonoBehaviour
                 }
                 break;
 
-            //Player2が仕掛ける
+            //Player2が仕掛けた
             case 2:
                 {
                     //Player1の処理

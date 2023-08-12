@@ -15,6 +15,13 @@ public class TitleController : MonoBehaviour
 
     static public int  guardRate;
 
+    //CloseContest用の変数================================================
+    //5050の時のAS2の攻撃頻度　高くすることでよりアグレッシブになる
+    static public int aggression5050AS2;
+    //Player1優勢の際のguard率（低くすることで攻撃が通りやすくなる→攻撃能力が向上）
+    static public int guardRateAS2;
+    //====================================================================
+
     // Start is called before the first frame update
     void Start()
     {
