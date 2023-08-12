@@ -23,7 +23,7 @@ AnimationClip:
       value: {fileID: 21300000, guid: b08463c71cb914f42ab85df1cad19bf0, type: 3}
     - time: 1
       value: {fileID: 21300000, guid: b08463c71cb914f42ab85df1cad19bf0, type: 3}
-    - time: 1.2666667
+    - time: 1.1666666
       value: {fileID: 21300000, guid: b08463c71cb914f42ab85df1cad19bf0, type: 3}
     attribute: m_Sprite
     path: 
@@ -52,7 +52,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.2833333
+    m_StopTime: 1.1833333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -74,13 +74,6 @@ AnimationClip:
   m_Events:
   - time: 1
     functionName: Slashed
-    data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 504242d325322bf4cb6462aa65d32922, type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 1.25
-    functionName: CheckOut
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 504242d325322bf4cb6462aa65d32922, type: 3}
     floatParameter: 0

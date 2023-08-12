@@ -111,7 +111,7 @@ public class CloseContestController : MonoBehaviour
         timerCounter += Time.deltaTime;
 
         //状態
-        switch (stateNumber)
+        switch (stateNumber)　　//全般的な注意としてEvPが負の値なら１P有利、正の値なら２P有利としている
         {
             //5050
             case 0:
@@ -136,9 +136,9 @@ public class CloseContestController : MonoBehaviour
                             //クリアー
                             timerCounter = 0.0f;
 
-                            //フラグクリア(一本とガードがバッティングすることはないので、仕掛ける直前には必ずクリアすること)
+                            //フラグクリア(一本とガードがバッティングすることはないので、仕掛ける直前には必ずクリアすること)→guardは廃止
                             myAnimator.SetBool("Ippon", false);
-                            myAnimator.SetBool("Guard", false);
+                            //myAnimator.SetBool("Guard", false);
 
                             //Player1が仕掛ける
                             myAnimator.SetTrigger("Attack1AS1");
@@ -158,7 +158,7 @@ public class CloseContestController : MonoBehaviour
                             {
                                 //フラグクリア
                                 myAnimator.SetBool("Ippon", false);
-                                myAnimator.SetBool("Guard", false);
+                                //myAnimator.SetBool("Guard", false);
 
                                 //Player2が仕掛ける
                                 myAnimator.SetTrigger("Attack1AS2");
@@ -179,7 +179,7 @@ public class CloseContestController : MonoBehaviour
 
                             //フラグクリア
                             myAnimator.SetBool("Ippon", false);
-                            myAnimator.SetBool("Guard", false);
+                            //myAnimator.SetBool("Guard", false);
 
                             //Player1が仕掛ける
                             myAnimator.SetTrigger("Attack1AS1");
@@ -202,7 +202,7 @@ public class CloseContestController : MonoBehaviour
                             {
                                 //フラグクリア
                                 myAnimator.SetBool("Ippon", false);
-                                myAnimator.SetBool("Guard", false);
+                                //myAnimator.SetBool("Guard", false);
 
                                 //Player2が仕掛ける
                                 myAnimator.SetTrigger("Attack1AS2");
@@ -223,7 +223,7 @@ public class CloseContestController : MonoBehaviour
                     {
                         //ガード失敗
                         myAnimator.SetBool("Ippon", true);
-                        myAnimator.SetInteger("Assign", 1);
+                        //myAnimator.SetInteger("Assign", 1);　アサインも廃止
 
                         //クリアー
                         timerCounter = 0.0f;
@@ -236,8 +236,9 @@ public class CloseContestController : MonoBehaviour
                         //ランダム 仮に5%
                         if (Random.Range(0, 100) < 5)　//Player1が攻撃を仕掛けてから0.8秒（変数候補）が経過するまでガードの判定
                         {
-                            myAnimator.SetBool("Guard", true);
-                            myAnimator.SetInteger("Assign", 2);
+                            //myAnimator.SetBool("Guard", true);　//guard廃止
+                            myAnimator.SetBool("Ippon", false);
+                            //myAnimator.SetInteger("Assign", 2);　//アサインも廃止
 
                             //Player2が有利になる
                             hpManager.EvP++;
@@ -273,7 +274,8 @@ public class CloseContestController : MonoBehaviour
                         //ガードキー
                         if (Input.GetKeyDown(KeyCode.X))
                         {
-                            myAnimator.SetBool("Guard", true);
+                            //myAnimator.SetBool("Guard", true); //guard廃止したのでIpponをフォルスにする
+                            myAnimator.SetBool("Ippon", false);
                             myAnimator.SetInteger("Assign", 1);
 
                             //Player1が有利になる
@@ -337,7 +339,7 @@ public class CloseContestController : MonoBehaviour
             //戻る
             case 9:
                 {
-                    if (timerCounter > 0.5f)
+                    if (timerCounter > 1.09f) //CheckOutする
                     {
                         GameObject.Find("PlayerGenerator").GetComponent<PlayerGenerator>().CheckoutCloseContest();
                     }
