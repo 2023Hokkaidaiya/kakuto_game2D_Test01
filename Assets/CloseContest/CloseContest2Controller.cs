@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CloseContestController : MonoBehaviour
+public class CloseContest2Controller : MonoBehaviour
 {
     //Rigidbody2Dïœêî
     //Rigidbody2D rbody;
